@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>My Chat</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div ng-app="myApp" ng-controller="myCtrl">
+    <ul>
+      <li ng-repeat="message in messages track by $index">{{message}}</li>
+    </ul>
+    <form ng-submit="submit()">
+      <input autocomplete="off" ng-model="exampleText" type="text" />
+      <button type='button' ng-click="submit()">
+        Send
+      </button>
+    </form>
+  </div>
+  <script>
+
+   var app=angular.module("myApp", []);
+   var socket = io();
+   app.controller("myCtrl", function($scope) {
+     $scope.messages = [];
+     $scope.submit=function(){
+      socket.emit('chat message', angular.copy($scope.exampleText));
+      $scope.exampleText='';
+      return false; 
+    }
+    socket.on('chat message', function(msg){
+      $scope.$apply(function() {
+        $scope.messages.push(msg);
+      });
+    });
+  });
+
+</script>
+</body>
+</html> 
+

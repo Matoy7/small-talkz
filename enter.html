@@ -1,13 +1,3 @@
-<body>
-	<div class="jumbotron text-center">
-		<h1>old value</h1>
-		<form name="myForm" ng-submit="updateMsg(userType)">
-			Please enter your user name:
-			<br>
-			Name: <input name="name" ng-model="name" required>
-			<br>
-			Room: <input name="room" ng-model="room" required>
-			<button type="button" ng-click="updateMsg({name: name,room: room})">Enter</button>
-		</form>
-	</div>
-</body>
+ <div ui-view="">
+    <a ui-sref="enter2">Enter here</a>
+  </div>
