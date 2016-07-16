@@ -1,23 +1,23 @@
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
 <body>
-	<table class="center">
-		<tr>
-			<td>	
+	<div class="chat">
+		<div class="members">
+			{{users}}
+		</div>
+		<div class="messages">
+			<ul>
 				<li ng-repeat="message in messages track by $index">{{message}}</li>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			
-				<form ng-submit="submit()">
-				{{info}}  
-				<br>
-				<input autocomplete="off" ng-model="insertedText" ng-change="isUserTyping()" type="text" />
-					<button type="button" ng-click="submit()">
-						Send
-					</button>
-				</form>
 			</ul>
-		</td>
-	</tr>
-</table>
+		</div>
+		<form ng-submit="submit()">
+			{{info}}  
+			<br>
+			<input autocomplete="off" ng-model="insertedText" ng-change="isUserTyping()" type="text" />
+			<button type="button" ng-click="submit()">
+				Send
+			</button>
+		</form>
+	</div>
 </body>
