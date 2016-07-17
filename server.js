@@ -19,7 +19,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('chat_message', function(data){
-		io.sockets.in(data.room).emit('chat_message',data.msg);
+		socket.broadcast.to(data.room).emit('chat_message',data.msg);
 	});
 	socket.on('info_message', function(data){
 		socket.broadcast.to(data.room).emit('info_message',data.msg);
@@ -28,7 +28,7 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
 		io.emit('chat message', "Bye");
 
-	});
+	}); 
 
 });
 

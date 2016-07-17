@@ -47,19 +47,33 @@ mymodule.controller("cntrlChat", ['$scope', 'myService','$q','$timeout',
   function($scope, myService,$q,$timeout){ 
    var socket = io();
    $scope.messages = [];
+   $scope.message_type="sender";
    $scope.room= myService.get().room;
    $scope.name= myService.get().name;
    socket.emit('room', $scope.room);
 
    $scope.submit=function(){
     socket.emit('chat_message',{ room: $scope.room, msg: $scope.name+": "+$scope.insertedText });
+    $scope.message_type="sender";
+
+    message={
+      txt: $scope.name+": "+$scope.insertedText,
+      sender: false
+    }
+    $scope.messages.push(message);
     $scope.insertedText='';
     return false; 
   }
 
   socket.on('chat_message', function(msg){
     $scope.$apply(function() {
-      $scope.messages.push(msg);
+
+      message={
+        txt: msg,
+        sender: true
+      }
+      
+      $scope.messages.push(message);
 
     });
   });
@@ -67,7 +81,6 @@ mymodule.controller("cntrlChat", ['$scope', 'myService','$q','$timeout',
   socket.on('info_message', function(msg){
     $scope.$apply(function() {
       $scope.info=msg;
-
     });
   });
 

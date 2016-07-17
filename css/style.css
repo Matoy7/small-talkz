@@ -20,7 +20,7 @@ html body {
 .chat ul {
     list-style: none;
     padding: 0;
-    margin: 1em 1em 0
+    margin: 1em 1em 
 }
 .chat ul li {
     width: auto;
@@ -28,11 +28,23 @@ html body {
     margin-left: 3em;
     position: relative;
     border-radius: 7px;
-    background: rgba(245, 222, 179, 0.49);
+    
     float: left;
-    clear: left;
     margin-top: 0.6em
 }
+
+.chat .sender{
+	background: rgba(245, 222, 179, 0.49);
+	float: right;
+    clear: right;
+}
+
+.chat .receiver{
+	background: rgba(2, 222, 2, 0.49);
+	float: left;
+    clear: left;
+}
+
 .chat ul li:before {
     content: '';
     background-image: url('../images/nobody_m.original.jpg');
