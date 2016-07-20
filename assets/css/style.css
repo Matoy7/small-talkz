@@ -47,7 +47,7 @@ html body {
 
 .chat ul li:before {
     content: '';
-    background-image: url('../images/nobody_m.original.jpg');
+    background-image: url('../img/avatar.jpg');
     background-size: cover;
     width: 30px;
     height: 30px;
@@ -75,7 +75,7 @@ html body {
 }
 .chat .messages:after {
     content: "";
-    background: url('../images/black-skulls-web-pattern.png');
+    background: url('../img/black-bg.png');
     opacity: 0.5;
     top: 0;
     left: 0;
