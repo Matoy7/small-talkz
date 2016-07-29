@@ -1,4 +1,5 @@
  
+
 var smallTalkzModel = angular.module('smallTalkzModel', ['ngRoute']);
 smallTalkzModel.config(function($routeProvider) {
   $routeProvider

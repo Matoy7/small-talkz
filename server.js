@@ -36,21 +36,3 @@ io.on('connection', function(socket){
 http.listen((process.env.PORT || 3000), function(){
 	console.log('listening on *:3000 '+ __dirname);
 });
-
-var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
-MongoClient.connect(url, function(err, db) {
-	assert.equal(null, err);
-
-	var cursor =db.collection('users').find( { "count": { $gt: -1 } } );
-	cursor.each(function(err, doc) {
-		assert.equal(err, null);
-		if (doc != null) {
-			 console.dir(doc);
-		} else {
-			 
-		}
-	}
-	);
-	console.log("Connected correctly to server.");
-	db.close();
-});
