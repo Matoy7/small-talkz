@@ -1,0 +1,91 @@
+html{
+	height:100vh;
+	body{
+		margin:0;
+	}
+}
+.chat{
+	margin:0;
+	height: 97vh;
+	font-family: 'Arial';
+	text-align: center;
+	.members{
+	    width: 10em;
+	    height: 100vh;
+	    display: inline-block;
+	    float: left;
+	    background: rgba(255,255,255,0.9);
+   	}
+	ul{
+		list-style: none;
+		padding:0;
+    	margin: 1em 1em 0;
+    	li{
+		    width: auto;
+		    padding: 0.5em 1em;
+		    margin-left: 3em;
+		    position: relative;
+		    border-radius: 7px;
+		    background: rgba(245,222,179,0.49);
+		    float: left;
+		    clear: left;
+		    margin-top: 0.6em;
+		    &:before{
+				content: '';
+			    background-image: url('../img/avatar.jpg');
+			    background-size: cover;
+			    width: 30px;
+			    height: 30px;
+			    border: rgba(0,0,0,0.1) 1px solid;
+			    border-radius: 50%;
+			    z-index: 4;
+			    position: absolute;
+			    left: -3em;
+			    top: 0.2em;
+			}
+    	}
+	}
+	form{
+		width: 100%;
+	}
+	.messages{
+	    overflow-y: scroll;
+	    height: calc(~"100% - 6em");
+	    background: rgba(255,255,255,0.9);
+	    border-radius: 5px;
+	    border: 1px solid rgba(0,0,0,0.5);
+	    width: calc(~"100% - 13em");
+	    margin: 1em;
+	    margin-bottom: 0em;
+	    box-shadow: 1px 1px 18px white;
+	    float: left;
+	    &:after {
+		  content: "";
+		  background: url('../img/black-bg.png');
+		  opacity: 0.5;
+		  top: 0;
+		  left: 0;
+		  bottom: 0;
+		  right: 0;
+		  position: absolute;
+		  z-index: -1;   
+		}
+	}
+
+	input{
+	    border-radius: 5px;
+	    box-sizing: border-box;
+	    font-size: 1em;
+	    width: calc(~"100% - 13em");
+	    line-height: 1.9em;
+	    padding-left: 0.7em;
+	    margin: 1em;
+	    float: left;
+	    margin-top: 1em;
+	    margin-left: 1em;
+	    border: 1px solid rgba(0,0,0,0.5);
+   	}
+	button{
+		display: none;
+	}
+}
