@@ -1,6 +1,6 @@
 
-smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$timeout',
-  function($scope, sessionInfo,$q,$timeout){ 
+smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$timeout','$http',
+  function($scope, sessionInfo,$q,$timeout,$http){ 
    var socket = io();
    $scope.messages = [];
    $scope.message_type="sender";
@@ -21,6 +21,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     return false; 
   }
 
+
   socket.on('chat_message', function(msg){
     $scope.$apply(function() {
 
@@ -32,6 +33,12 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
       $scope.messages.push(message);
 
     });
+  });
+
+    socket.on('disconnect', function(msg){
+ 
+       $scope.messages.push('xxxxxxxxxxx');
+
   });
 
   socket.on('info_message', function(msg){
