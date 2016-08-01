@@ -8,7 +8,10 @@
 		</div>
 		<div class="messages">
 			<ul>
-				<li ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index">{{message.txt}}</li>
+				<li class="members">
+					
+				</li>
+				<li ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index"><div class="msg">{{message.txt}}</div></li>
 
 			</ul>
 		</div>
