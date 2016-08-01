@@ -28,7 +28,9 @@ app.get('/users', function(req, res){
 	get_user(req, res);
 });
 
-
+var remove_user= function(user_name){
+	User_session.find({'user_name':user_name}).remove().exec();
+}  
 
 var get_user= function(req, res){
 	var query= User_session.find();
@@ -39,7 +41,7 @@ var get_user= function(req, res){
 	});  
 
 }
-//get the cat named mike
+
 app.post('/users', function(req, res){
 	add_user(req, res);
 });
@@ -71,10 +73,15 @@ var add_user=function(req, res){
     });
 
     io.on('connection', function(socket){
-    	io.emit('chat_message', "welcome");
+
 
     	socket.on('room', function(room) {
+    		socket.room=room;
     		socket.join(room);
+    	});
+
+    	socket.on('user', function(user) {
+    		socket.user=user;
     	});
 
     	socket.on('chat_message', function(data){
@@ -85,7 +92,8 @@ var add_user=function(req, res){
     	});
 
     	socket.on('disconnect', function(){
-    		console.log('bye '+socket.id);
+    		remove_user(socket.user);
+    		console.log('Bye '+socket.user);
     		io.emit('chat message', "Bye");
 
     	}); 

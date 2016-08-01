@@ -6,7 +6,10 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
    $scope.message_type="sender";
    $scope.room= sessionInfo.get().room;
    $scope.name= sessionInfo.get().name;
+   
    socket.emit('room', $scope.room);
+   socket.emit('user', $scope.name);
+   socket.emit('chat_message', "welcome");
 
    $scope.submit=function(){
     socket.emit('chat_message',{ room: $scope.room, msg: $scope.name+": "+$scope.insertedText });
@@ -35,11 +38,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     });
   });
 
-    socket.on('disconnect', function(msg){
- 
-       $scope.messages.push('xxxxxxxxxxx');
 
-  });
 
   socket.on('info_message', function(msg){
     $scope.$apply(function() {
