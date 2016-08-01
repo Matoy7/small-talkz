@@ -4,6 +4,42 @@ html{
 		margin:0;
 	}
 }
+.jumbotron{
+    margin: 0 auto;
+    background-color: #fffcdd;
+    width: 380px;
+    height: 460px;
+    box-shadow: 0px 0px 8px #bebebe;
+    margin-top: 1em;
+    input{
+    	border: 1px solid #dfdfdf;
+    	margin-top: 0.2em;
+		&::-webkit-input-placeholder {
+		   color: #bebebb;
+		   padding-left:0.5em;
+		}
+		&:-moz-placeholder { /* Firefox 18- */
+		   color: #bebebb;  
+		   padding-left:0.5em;
+		}
+		&::-moz-placeholder {  /* Firefox 19+ */
+		   color: #bebebb;  
+		   padding-left:0.5em;
+		}
+		&:-ms-input-placeholder {  
+		   color: #bebebb;  
+		   padding-left:0.5em;
+		}
+    }
+	.welcome{
+		img{
+			display: block;
+			margin:0 auto;
+			margin-top: 0.2em;
+		}
+	}
+}
+
 .chat{
 	margin:0;
 	height: 97vh;
@@ -48,6 +84,7 @@ html{
 	form{
 		width: 100%;
 	}
+
 	.messages{
 	    overflow-y: scroll;
 	    height: calc(~"100% - 6em");

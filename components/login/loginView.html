@@ -1,31 +1,37 @@
 <head>
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
+	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/owl.carousel.css">
+ 	<link rel="stylesheet" href="../assets/css/owl.theme.css">
+
 </head>
 
 <body>
-	 
+	<div id="loginPage">
 		
-		<table align="center"  width=70% class="jumbotron text-center">
+		<div id="owl-example" class="jumbotron text-center">
+			<div class="welcome item">	
+				<h1>Welcome</h1>
+				<img src="../../assets/img/google-login.png"  height="40px" alt="Login with Google+">
+				<img src="../../assets/img/facebook-login.png" height="40px" alt="Login with Facebook">
+				<img src="../../assets/img/st-login.png" height="40px" alt="Login with Small-Talkz">
+			</div>
+			<div class="facebook-login item">
+				<form name="myForm" ng-submit="updateMsg(userType)" width="70%">
+					Right now there are {{count}} users talking in {{count}} talks
 
-		<tr>
-		<td>
-			<h1>Welcome</h1>
-		<form name="myForm" ng-submit="updateMsg(userType)" width="70%">
-			Right now there are {{count}} users talking in {{count}} talks
+					<br>
+					<br>
+					<input name="name" ng-model="name" required placeholder="Name">
+					<br>
+					<input name="room" ng-model="room" required placeholder="Room">
+					<br><br>
+					<button type="button" ng-click="updateMsg({name: name,room: room})">Start conversation</button>
 
-			<br>
-			<br>
-			Name: <input name="name" ng-model="name" required>
-			<br>
-			Room: <input name="room" ng-model="room" required>
-			<br><br>
-			<button type="button" ng-click="updateMsg({name: name,room: room})">Start conversation</button>
+					<button type="button" ng-click="updateMsg({name: name,room: room})">Join conversation</button>
 
-			<button type="button" ng-click="updateMsg({name: name,room: room})">Join conversation</button>
-
-		</form>
-		</td>
-		</tr>
-		</table>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
