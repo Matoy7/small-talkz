@@ -10,16 +10,103 @@
  	<script src="small-talkz.model.js"></script>
  	<script src="components/chat/chatController.js"></script>
  	<script src="components/login/loginController.js"></script>
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
- 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="/assets/js/jquery-1.9.1.min.js"></script>
-	<script src="/assets/js/owl.carousel.min.js"></script>
-	<script src="/assets/js/main.js"></script>
 
+ 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
  </head>
+
+
+ <div ng-controller="AppController">
+ 	<div class="m-app-loading" ng-animate-children>
  
+        <style type="text/css">
+        	div.m-app-loading {
+        		position: fixed ;
+        	}
+        	div.m-app-loading div.animated-container {
+        		background-color: #333333 ;
+        		bottom: 0px ;
+        		left: 0px ;
+        		opacity: 1.0 ;
+        		position: fixed ;
+        		right: 0px ;
+        		top: 0px ;
+        		z-index: 999999 ;
+        	}
+        	/* Used to initialize the ng-leave animation state. */
+        	div.m-app-loading div.animated-container.ng-leave {
+        		opacity: 1.0 ;
+        		transition: all linear 200ms ;
+        		-webkit-transition: all linear 200ms ;
+        	}
+        	/* Used to set the end properties of the ng-leave animation state. */
+        	div.m-app-loading div.animated-container.ng-leave-active {
+        		opacity: 0 ;
+        	}
+        	div.m-app-loading div.messaging {
+        		color: #FFFFFF ;
+        		font-family: monospace ;
+        		left: 0px ;
+        		margin-top: -37px ;
+        		position: absolute ;
+        		right: 0px ;
+        		text-align: center ;
+        		top: 50% ;
+        	}
+        	div.m-app-loading h1 {
+        		font-size: 26px ;
+        		line-height: 35px ;
+        		margin: 0px 0px 20px 0px ;
+        	}
+        	div.m-app-loading p {
+        		font-size: 18px ;
+        		line-height: 14px ;
+        		margin: 0px 0px 0px 0px ;
+        	}
+        </style> 
+
+        <div class="animated-container">
+        	<div class="messaging">
+        		Loading...
+        	</div>
+        </div>
+
+    </div>
+  
  <div ng-app="smallTalkzModel" ng-view>
  </div>
-
  
- </html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js">
+
+</script>
+<script type="text/javascript">
+	var app = angular.module( "Demo", [ "ngAnimate" ] );
+
+	angular.element(document).ready(function() {
+		angular.bootstrap(document, ['Demo']);
+	});
+        app.controller(
+            "AppController",
+            function( $scope ) {
+  
+            }
+            );
+	app.directive(
+		"mAppLoading",
+		function( $animate ) {
+			return({
+				link: link,
+				restrict: "C"
+			});
+
+			function link( scope, element, attributes ) {
+				$animate.leave( element.children().eq( 1 ) ).then(
+					function cleanupAfterAnimation() {
+						element.remove();
+						scope = element = attributes = null;
+					});
+			}
+		});
+	</script>
+</div>
+</html>
