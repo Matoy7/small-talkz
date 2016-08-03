@@ -74,6 +74,7 @@ var add_user=function(req, res){
 
     io.on('connection', function(socket){
 
+    	//io.emit('chat_message', "welcome ");
 
     	socket.on('room', function(room) {
     		socket.room=room;
