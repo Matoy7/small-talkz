@@ -10,14 +10,27 @@
  	<script src="small-talkz.model.js"></script>
  	<script src="components/chat/chatController.js"></script>
  	<script src="components/login/loginController.js"></script>
+ 	<style>
+ 		body.loading > * {
+ 			display: none;
+ 		}
 
+ 		body.loading > .loader {
+ 			display: block !important;
+ 		}
 
+ 		body > .loader {
+ 			display: none !important;
+ 		}
+ 	</style>
  </head>
 
- <div ng-app="smallTalkzModel" >
- 	<div ng-view>
+ <body class="loading" ..>
+ <div>Loader Goes Here</div>
+
+ 	<div ng-app="smallTalkzModel" class="loader">
+ 		<div ng-view>
+ 		</div>
  	</div>
- 
- 	
- </div>
+ </body>
  </html>

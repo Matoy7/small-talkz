@@ -12,7 +12,16 @@ smallTalkzModel.config(function($routeProvider) {
       templateUrl : 'components/chat/chatView.html',
       controller  : 'chatController'
     });
-  });
+  }).run(function ($rootScope) {
+
+    $rootScope.$on('$stateChangeSuccess', function() {
+       $('body').removeClass('loader');
+    });
+
+    $rootScope.$on('$stateChangeStart', function() {
+       $('body').addClass('loader');
+    });
+});;
 
 
   smallTalkzModel.factory('sessionInfo', function() {
