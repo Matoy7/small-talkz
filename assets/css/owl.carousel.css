@@ -24,6 +24,11 @@
 	position: relative;
 	-webkit-transform: translate3d(0px, 0px, 0px);
 }
+
+.text-center {
+     text-align: center
+ }
+
 .owl-carousel .owl-wrapper-outer{
 	overflow: hidden;
 	position: relative;

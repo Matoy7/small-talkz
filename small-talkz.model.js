@@ -12,13 +12,7 @@ smallTalkzModel.config(function($routeProvider) {
       templateUrl : 'components/chat/chatView.html',
       controller  : 'chatController'
     });
-  }).run(function ($rootScope) {
-
-    // App is loading, so set isAppLoading to true and start a timer
-    console.log($rootScope);
-    $rootScope.isAppLoading = true;
-
-  });;
+  });
 
 
   smallTalkzModel.factory('sessionInfo', function() {
