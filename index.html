@@ -10,12 +10,21 @@
  	<script src="small-talkz.model.js"></script>
  	<script src="components/chat/chatController.js"></script>
  	<script src="components/login/loginController.js"></script>
- 
+
 
  </head>
- 
- <div ng-app="smallTalkzModel" ng-view>
- </div>
 
+ <div ng-app="smallTalkzModel" >
+ 	<div ng-view>
+ 	</div>
+ 	<div ng-app class="fade-it" ng-if="isAppLoading == false">
  
+ 		<h3>loading </h3>
+ 		<div spinner></div>
+
+ 	</div>
+
+
+ 	
+ </div>
  </html>
