@@ -14,6 +14,15 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			console.log('Error: ' + data);
 		});
 
+		$scope.NewConversation=false;
+		
+		$scope.showNewConversation=function(){
+			$scope.NewConversation=true;
+		}
+
+		$scope.showJoinConversation=function(){
+			$scope.NewConversation=false;
+		}
 
 		$scope.updateMsg = function (info) {
 			sessionInfo.set(info);

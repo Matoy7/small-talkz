@@ -6,24 +6,26 @@
 			<img class="logo" src="../../assets/img/logo.png" alt="Small-Taklz logo">
 			<br>
 			Right now there are {{count}} users talking in {{count}} talks
-	<br><br>
+			<br><br>
 			<div class="welcome item">	
 				<img src="../../assets/img/google-login.png" width="200px" height="40px" alt="Login with Google+">
 				<img src="../../assets/img/facebook-login.png" width="200px" height="40px" alt="Login with Facebook">
 				<img src="../../assets/img/st-login.png" width="200px" height="40px" alt="Login with Small-Talkz">
 			</div>
-			<div class="facebook-login item">
-				<form name="myForm" ng-submit="updateMsg({name: name,room: room})" width="70%">
+			<div>
+				<form name="loginForm" width="70%">
 
 					<br>
-			 
-					<input autocomplete="off" name="name" ng-model="name" required placeholder="Name">
-					<br>
-					<input autocomplete="off" name="room" ng-model="room" required placeholder="Room">
+					<button type="button" ng-click="NewConversation=true" >New Conversation</button>
+					<button type="button" ng-click="NewConversation=false" >Join Conversation</button>
 					<br><br>
-					<button type="submit">Start conversation</button>
-
-					<button type="submit">Join conversation</button>
+					<div ng-if="NewConversation">
+						<input autocomplete="off" name="name" ng-model="name" required placeholder="Name">
+						<br>
+						<input autocomplete="off" name="room" ng-model="room" required placeholder="Room">
+						<br><br>
+						<button  ng-click="updateMsg({name: name,room: room})">Start Talking!</button>
+					</div>
 
 				</form>
 			</div>
