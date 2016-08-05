@@ -7,7 +7,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		
 		$http.get('/users')
 		.success(function(data) {
-			$scope.count = data.length;
+			$scope.usersNumber = data.length;
 
 		})
 		.error(function(data) {
@@ -16,19 +16,29 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 
 		$scope.NewConversation=false;
 		
-		$scope.showNewConversation=function(){
-			$scope.NewConversation=true;
+
+		$scope.randomRoom = function () {
+			$http.get('/rooms')
+			.success(function(data) {
+				$scope.randomName = "guest";
+$scope.randomRoom = data.room_name;
+			})
+			.error(function(data) {
+				console.log('Error: ' + data);
+			});
+
 		}
 
-		$scope.showJoinConversation=function(){
-			$scope.NewConversation=false;
-		}
 
-		$scope.updateMsg = function (info) {
-			sessionInfo.set(info);
+
+		$scope.enterRoom = function (info) {
+			sessionInfo.set(info);			
+			
+			$scope.name=sessionInfo.get().name;
+			$scope.room=sessionInfo.get().room;
+
 			$http.post('/users', {'user_name':$scope.name,'room_name':$scope.room})
 			.success(function(data) {
-
 			})
 			.error(function(data) {
 				console.log('Error:'+ data);

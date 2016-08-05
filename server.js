@@ -28,49 +28,67 @@ app.get('/users', function(req, res){
 	get_user(req, res);
 });
 
+app.get('/rooms', function(req, res){
+    get_room(req, res);
+});
+
+app.post('/users', function(req, res){
+ add_user(req, res);
+});
+
+
+
+app.use(express.static(path.join(__dirname, '/')));
+
+app.get('/', function(req, res){
+   res.sendFile(__dirname + '/index.html');
+});
+
 var remove_user= function(user_name){
-	User_session.find({'user_name':user_name}).remove().exec();
+ User_session.find({'user_name':user_name}).remove().exec();
 }  
 
 var get_user= function(req, res){
-	var query= User_session.find();
-	query.exec( function(err, docs){
-		res.json(docs);
+
+ var query= User_session.find();
+ query.exec( function(err, docs){
+  res.json(docs);
 		//mongoose.connection.close();
 
 	});  
 
 }
-
-app.post('/users', function(req, res){
-	add_user(req, res);
-});
-
-
 var add_user=function(req, res){
 
         // create a user, information comes from AJAX request from Angular
-        var new_user_session= { "user_name": req.body.user_name, "room_name":req.body.room_name };
+        var new_user_session= { "user_name": req.body.user_name, "room_name": req.body.room_name };
         User_session.create(new_user_session, function (err, user_session) {
-
-        	if (err){
-        		res.send(err);
-        	}
+            console.log(req.body.user_name);
+            if (err){
+              res.send(err);
+          }
             // get and return all the users after you create another
             User_session.find(function(err, user_sessions) {
-            	if (err)
-            		res.send(err)
-            	res.json(user_sessions);
+                if (err)
+                    res.send(err)
+                res.json(user_sessions);
             });
         });
 
     }
 
-    app.use(express.static(path.join(__dirname, '/')));
-
-    app.get('/', function(req, res){
-    	res.sendFile(__dirname + '/index.html');
+    var get_room= function(req, res){
+        var query= User_session.find();
+        query.exec( function(err, docs){
+            randomIndex= Math.floor(Math.random() * docs.length)  
+            console.log('randomIndex: '+randomIndex);
+                res.json(docs[randomIndex]);
+        //mongoose.connection.close();
     });
+    };  
+
+
+
 
     io.on('connection', function(socket){
 
@@ -102,5 +120,7 @@ var add_user=function(req, res){
     });
 
     http.listen((process.env.PORT || 3000), function(){
-    	console.log('listening on *:3000 '+ __dirname);
+        User_session.find({}).remove().exec();
+
+        console.log('listening on *:3000 '+ __dirname);
     });

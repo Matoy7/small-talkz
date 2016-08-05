@@ -5,7 +5,7 @@
 		<div id="owl-example" class="jumbotron text-center">
 			<img class="logo" src="../../assets/img/logo.png" alt="Small-Taklz logo">
 			<br>
-			Right now there are {{count}} users talking in {{count}} talks
+			Right now there are {{usersNumber}} users talking in {{usersNumber}} talks
 			<br><br>
 			<div class="welcome item">	
 				<img src="../../assets/img/google-login.png" width="200px" height="40px" alt="Login with Google+">
@@ -16,17 +16,27 @@
 				<form name="loginForm" width="70%">
 
 					<br>
-					<button type="button" ng-click="NewConversation=true" >New Conversation</button>
-					<button type="button" ng-click="NewConversation=false" >Join Conversation</button>
+					<button type="button" ng-click="NewConversation=true;JoinConversation=false" >New Conversation</button>
+					<button type="button" ng-click="NewConversation=false;JoinConversation=true;randomRoomButtonClass=false" >Join Conversation
+					</button>
 					<br><br>
 					<div ng-if="NewConversation">
 						<input autocomplete="off" name="name" ng-model="name" required placeholder="Name">
 						<br>
 						<input autocomplete="off" name="room" ng-model="room" required placeholder="Room">
 						<br><br>
-						<button  ng-click="updateMsg({name: name,room: room})">Start Talking!</button>
+						<button type="button"  ng-click="enterRoom({name: name,room: room})">Start Talking!</button>
 					</div>
+					<div ng-if="JoinConversation">
+						<button type="button"  ng-click="randomRoomButtonClass=true;randomRoom()">Find random conversation!</button>
+						<br>		
+						<br>
+						<li style="list-style: none;">{{randomName}}</li>
+						<li style="list-style: none;">{{randomRoom}}</li>
+						<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: randomName,room: randomRoom})">Start Talking!</button>
 
+
+					</div>
 				</form>
 			</div>
 		</div>
