@@ -17,11 +17,11 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		$scope.NewConversation=false;
 		
 
-		$scope.randomRoom = function () {
+		$scope.getRandomRoom = function () {
 			$http.get('/rooms')
 			.success(function(data) {
 				$scope.randomName = "guest";
-$scope.randomRoom = data.room_name;
+				$scope.randomRoom = data.room_name;
 			})
 			.error(function(data) {
 				console.log('Error: ' + data);
