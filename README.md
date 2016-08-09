@@ -1,4 +1,4 @@
-Small-talkz is a chat application that allows anyone to start a conversation with.. well anyone who is online on the app. 
+Small-talkz is an instant messaging application that allows anyone to start a conversation with.. well anyone who is online on the app. 
 
 A user can open a conversation with a certain topic and wait for someone to join in, or to join an existing conversation based on the topic he wants.
 
