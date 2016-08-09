@@ -24,12 +24,12 @@ Q/A:
 
 - What do you need contributors to do?
 
-1. Anything they can. :)
+ Anything they can. :)
 
-2. And more seriously, we need code reviewers, css experts, angular best practice people, designers, but if you just have a good advice we are more then ready to take it and we will be forever grateful.
+ And more seriously, we need code reviewers, css experts, angular best practice people, designers, but if you just have a good advice we are more then ready to take it and we will be forever grateful.
 
 -  What about feature backlog? what more you need to implement?
 
-1. We are working on it at the moment.
+ We are working on it at the moment.
 
 Thanks 
