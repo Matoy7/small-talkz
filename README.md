@@ -9,9 +9,9 @@ Unlike other social network you don't necessary need to know the person you are 
 The app is built in MEAN (the combination mongodb express angular and node js).
 
 
-There is also a server which being deployed automaticly when code is pushed into the git repo on: small-talkz.herokuapp.com
+There is also a server which being deployed automaticly when code is pushed into the git repo on: http://small-talkz.herokuapp.com
 
-And also online mongodb server on: mlab.com/databases/small-talkz
+And also online mongodb server on: http://smlab.com/databases/small-talkz
 
 The code itseld is a singe page application model in angular.
 
