@@ -1,18 +1,21 @@
  
 
-var smallTalkzModel = angular.module('smallTalkzModel', ['ngRoute']);
-smallTalkzModel.config(function($routeProvider) {
+var smallTalkzModel = angular.module('smallTalkzModel', ['ui.router']);
+smallTalkzModel.config(function($stateProvider, $urlRouterProvider) {
 
-  $routeProvider
-  .when('/', {
+  $stateProvider
+  .state('login', {
+    url: '/login',
     templateUrl : 'components/login/loginView.html',
     controller  : 'loginController'
   }) 
-  .when('/chat', {
+  .state('chat', {
+    url: '/chat',
     templateUrl : 'components/chat/chatView.html',
     controller  : 'chatController'
-  });
-});;
+  })
+  $urlRouterProvider.otherwise('/login');
+});
 
 
 smallTalkzModel.factory('sessionInfo', function() {
