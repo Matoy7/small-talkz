@@ -2,7 +2,6 @@
 
 var smallTalkzModel = angular.module('smallTalkzModel', ['ui.router']);
 smallTalkzModel.config(function($stateProvider, $urlRouterProvider) {
-
   $stateProvider
   .state('login', {
     url: '/login',

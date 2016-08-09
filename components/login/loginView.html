@@ -28,15 +28,17 @@
 					</div>
 					<div ng-if="JoinConversation">
 						<button type="button"  ng-click="randomRoomButtonClass=true;getRandomRoom()">Random conversation!</button>
-						<br>		
-						<br>
-						<li style="list-style: none;">{{randomName}}</li>
-						<li style="list-style: none;">{{randomRoom}}</li>
-						<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: randomName,room: randomRoom})">Enter!</button>
-
-
+					 
+						<div ng-if="randomName && randomRoom">
+							<br>		
+							<br>
+							<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomName}}</li>
+							<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomRoom}}</li>
+							<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: randomName,room: randomRoom})">Enter!
+							</button>
+						</div>
 					</div>
-			  
+
 				</form>
 			</div>
 		</div>
