@@ -1,6 +1,6 @@
  
 
-var smallTalkzModel = angular.module('smallTalkzModel', ['ui.router']);
+var smallTalkzModel = angular.module('smallTalkzModel', ['ui.router','luegg.directives']);
 smallTalkzModel.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('login', {
