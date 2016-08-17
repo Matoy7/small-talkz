@@ -1,9 +1,7 @@
  
 <body>
 	<div class="chat">
-		<div class="members">
-			{{users}}
-		</div>
+
 		<div class="messages">
 			<ul>
 				<li class="members">
@@ -12,6 +10,9 @@
 				<li ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index"><div class="msg">{{message.txt}}</div></li>
 
 			</ul>
+		</div>
+		<div class="users">
+			<li ng-repeat="user in users track by $index"><div class="msg">{{users}}</div></li> 
 		</div>
 		<form ng-submit="submit()">
 			{{info}}  
