@@ -7,7 +7,7 @@ var assert = require('assert');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-var url = 'mongodb://localhost:27017/small-talkz';
+var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
 mongoose.connect(url);
 
 //creating the model
