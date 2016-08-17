@@ -12,7 +12,11 @@
 			</ul>
 		</div>
 		<div class="users">
-			<li ng-repeat="user in users track by $index"><div class="msg">{{users}}</div></li> 
+			<ul>
+				<li ng-repeat="user in users track by $index">
+					{{users}}
+				</li>
+			</ul> 
 		</div>
 		<form ng-submit="submit()">
 			{{info}}  
