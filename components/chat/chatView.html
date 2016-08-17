@@ -1,14 +1,9 @@
  
 <body>
 	<div class="chat">
-
-		<div class="messages">
+		<div scroll-glue="true" class="messages">
 			<ul>
-				<li class="members">
-					
-				</li>
-				<li ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index"><div class="msg">{{message.txt}}</div></li>
-
+				<li scroll-glue="true" ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index"><div class="msg" scroll-glue="true">{{message.txt}}</div></li>
 			</ul>
 		</div>
 		<div class="users">
