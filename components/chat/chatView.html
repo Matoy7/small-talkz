@@ -1,6 +1,9 @@
  
 <body>
 	<div class="chat">
+		<div class="toggle-users" ng-click="showUsers()">
+			
+		</div>
 		<div scroll-glue="true" class="messages">
 			<ul>
 				<li scroll-glue="true" ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index"><div class="msg" scroll-glue="true">{{message.txt}}</div></li>
@@ -16,7 +19,7 @@
 		<form ng-submit="submit()">
 			{{info}}  
 			<br>
-			<input autocomplete="off" ng-model="insertedText" ng-change="isUserTyping()" type="text" />
+			<input autocomplete="off" ng-model="insertedText" ng-change="isUserTyping()" type="text" class="typing"/>
 			<button type="button" ng-click="submit()">
 				Send
 			</button>
