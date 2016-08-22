@@ -16,11 +16,11 @@
 				</li>
 			</ul> 
 		</div>
-		<form ng-submit="submit()">
+		<form  name="chatWindow" ng-submit="submit()">
 			{{info}}  
 			<br>
-			<input autocomplete="off" ng-model="insertedText" ng-change="isUserTyping()" type="text" class="typing"/>
-			<button type="button" ng-click="submit()">
+			<input autocomplete="off" ng-model="insertedText" ng-change="isUserTyping()" type="text" class="typing" required/>
+			<button type="button" ng-disabled="chatWindow.$invalid" ng-click="submit()">
 				Send
 			</button>
 		</form>
