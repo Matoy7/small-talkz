@@ -3,7 +3,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
   function($scope, sessionInfo,$q,$timeout,$http){ 
    var socket = io();
    $scope.messages = [];
-   $scope.users = [];
+   $scope.users_list = [];
    $scope.message_type="sender";
    $scope.room= sessionInfo.get().room;
    $scope.name= sessionInfo.get().name;
@@ -41,7 +41,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     return false; 
   }
 
- 
+
   socket.on('chat_message', function(msg){
     $scope.$apply(function() {
 
