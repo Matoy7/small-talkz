@@ -41,7 +41,14 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     return false; 
   }
 
-
+/*$(document).ready(function() {
+  if($(".chat").length > 0){
+    $(".toggle-users").on("click",function(){
+      $(".users").toggleClass("visible");
+    });
+  }
+});
+*/
   socket.on('chat_message', function(msg){
     $scope.$apply(function() {
 
