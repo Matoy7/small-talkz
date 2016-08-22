@@ -28,9 +28,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			});
 
 		}
-
-
-
+ 
 		$scope.enterRoom = function (info) {
 			sessionInfo.set(info);			
 			

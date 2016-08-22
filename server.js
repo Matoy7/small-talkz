@@ -33,7 +33,7 @@ app.get('/rooms', function(req, res){
 });
 
 app.post('/users', function(req, res){
-   add_user(req, res);
+ add_user(req, res);
 });
 
 
@@ -41,22 +41,22 @@ app.post('/users', function(req, res){
 app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/', function(req, res){
- res.sendFile(__dirname + '/index.html');
+   res.sendFile(__dirname + '/index.html');
 });
 
 var remove_user= function(user_name){
-   User_session.find({'user_name':user_name}).remove().exec();
+ User_session.find({'user_name':user_name}).remove().exec();
 }  
 
 var get_user= function(req, res){
 
-   var query= User_session.find();
-         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+ var query= User_session.find();
+ res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
 
 
-   query.exec( function(err, docs){
-console.log('docs===========>'+docs.length);
-      res.json(docs);
+ query.exec( function(err, docs){
+
+  res.json(docs);
 		//mongoose.connection.close();
 
 	});  
@@ -110,16 +110,21 @@ var add_user=function(req, res){
     	socket.on('chat_message', function(data){
     		socket.broadcast.to(data.room).emit('chat_message',data.msg);
     	});
-    	socket.on('info_message', function(data){
-    		socket.broadcast.to(data.room).emit('info_message',data.msg);
-    	});
 
-    	socket.on('disconnect', function(){
-    		remove_user(socket.user);
-    		console.log('Bye '+socket.user);
-    		io.emit('chat message', "Bye");
+        socket.on('new_user', function(room){
+            socket.broadcast.to(room).emit('handle_new_user');
+        });
 
-    	}); 
+        socket.on('info_message', function(data){
+          socket.broadcast.to(data.room).emit('info_message',data.msg);
+      });
+
+        socket.on('disconnect', function(){
+          remove_user(socket.user);
+          console.log('Bye '+socket.user);
+          io.emit('chat message', "Bye");
+
+      }); 
 
     });
 

@@ -12,46 +12,54 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
    socket.emit('user', $scope.name);
 
    var room_info;
-   $http.get('/users')
-   .success(function(data) {
-    data.forEach(updateUsers);
-  })
-   .error(function(data) {
-    console.log('Error: ' + data);
-  });
-   
-   
- 
+
+   var updateUsersList =function (){
+    $scope.users_list=[];
+     $http.get('/users')
+     .success(function(data) {
+      data.forEach(updateUsers);
+    })
+     .error(function(data) {
+      console.log('Error: ' + data);
+    })
+   };
+
    function updateUsers(element, index, array) {
     $scope.users_list.push(element.user_name);
   }
-
-
-
+ 
+  updateUsersList();
+ 
   socket.emit('chat_message',{ room: $scope.room, msg: 'A new User has joined the coversation' });
+
+  socket.emit('new_user', $scope.room);
 
   $scope.submit=function(){
     socket.emit('chat_message',{ room: $scope.room, msg: $scope.name+": "+$scope.insertedText });
-    $scope.message_type="sender";
 
     message={
       txt: $scope.name+": "+$scope.insertedText,
-      sender: false
+      sender: true
     }
     $scope.messages.push(message);
     $scope.insertedText='';
     return false; 
   }
 
+  socket.on('handle_new_user', function(){
+    $scope.$apply(function() {
+     updateUsersList();
+   });
+  });
 
   socket.on('chat_message', function(msg){
     $scope.$apply(function() {
 
       message={
         txt: msg,
-        sender: true
+        sender: false
       }
-      
+
       $scope.messages.push(message);
 
     });
