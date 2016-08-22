@@ -15,24 +15,24 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
 
    var updateUsersList =function (){
     $scope.users_list=[];
-     $http.get('/users')
-     .success(function(data) {
+    $http.get('/users')
+    .success(function(data) {
       data.forEach(updateUsers);
     })
-     .error(function(data) {
+    .error(function(data) {
       console.log('Error: ' + data);
     })
-   };
+  };
 
-   function updateUsers(element, index, array) {
+  function updateUsers(element, index, array) {
     $scope.users_list.push(element.user_name);
   }
- 
-  updateUsersList();
- 
-  socket.emit('chat_message',{ room: $scope.room, msg: 'A new User has joined the coversation' });
 
-  socket.emit('new_user', $scope.room);
+  updateUsersList();
+
+  socket.emit('chat_message',{ room: $scope.room, msg: $scope.name+' has joined the coversation' });
+
+  socket.emit('new_user',{room: $scope.room, name: $scope.name});
 
   $scope.submit=function(){
     socket.emit('chat_message',{ room: $scope.room, msg: $scope.name+": "+$scope.insertedText });
@@ -46,7 +46,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     return false; 
   }
 
-  socket.on('handle_new_user', function(){
+  socket.on('handle_new_user', function(data){
     $scope.$apply(function() {
      updateUsersList();
    });

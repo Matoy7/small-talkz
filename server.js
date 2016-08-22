@@ -111,8 +111,8 @@ var add_user=function(req, res){
     		socket.broadcast.to(data.room).emit('chat_message',data.msg);
     	});
 
-        socket.on('new_user', function(room){
-            socket.broadcast.to(room).emit('handle_new_user');
+        socket.on('new_user', function(data){
+            socket.broadcast.to(data.room).emit('handle_new_user',data);
         });
 
         socket.on('info_message', function(data){
