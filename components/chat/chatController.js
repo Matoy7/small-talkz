@@ -20,6 +20,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     console.log('Error: ' + data);
   });
    
+   
  
    function updateUsers(element, index, array) {
     $scope.users_list.push(element.user_name);
