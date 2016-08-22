@@ -6,20 +6,14 @@
  
 		<div ng-show="showUsers">
 		<br>
-		the users list should be here when the button is pressed....
+		{{users_list}}
 		</div>
 		<div scroll-glue="true" class="messages">
 			<ul>
 				<li scroll-glue="true" ng-class="{'sender' : message.sender, 'receiver' : !message.sender}" ng-repeat="message in messages track by $index"><div class="msg" scroll-glue="true">{{message.txt}}</div></li>
 			</ul>
 		</div>
-		<div class="users">
-			<ul>
-				<li ng-repeat="user in users track by $index">
-					{{users}}
-				</li>
-			</ul> 
-		</div>
+ 
 		<form  name="chatWindow" ng-submit="submit()">
 			{{info}}  
 			<br>
