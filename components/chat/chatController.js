@@ -26,6 +26,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
   }
 
 
+
   socket.emit('chat_message',{ room: $scope.room, msg: 'A new User has joined the coversation' });
 
   $scope.submit=function(){
