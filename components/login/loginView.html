@@ -9,7 +9,10 @@
 			<br><br>
 			<div class="welcome item">	
 				<img src="../../assets/img/google-login.png" alt="Login with Google+">
-				<img src="../../assets/img/facebook-login.png" alt="Login with Facebook">
+				<div class="fb-login-button" data-max-rows="1" data-size="icon"  data-auto-logout-link="true"></div>
+
+				<div id="status">
+				</div>
 			</div>
 			<div>
 				<form name="loginForm" width="70%">
@@ -28,17 +31,17 @@
 					</div>
 					<div ng-if="JoinConversation">
 						<button type="button"  ng-click="randomRoomButtonClass=true;getRandomRoom()">Random conversation!</button>
-				<div ng-if="randomName && randomRoom">
-							<br>		
-							<br>
+						<div ng-if="randomName && randomRoom" class="jumbotron text-center">
+
 							<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomName}}</li>
 							<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomRoom}}</li>
 							<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: randomName,room: randomRoom})">Enter!
 							</button>
 						</div>
 					</div>
-			  
+
 				</form>
+
 			</div>
 		</div>
 	</div>
