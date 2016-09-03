@@ -29,7 +29,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			});
 
 		}
-
+ 
 		$scope.enterRoom = function (info) {
 			sessionInfo.set(info);			
 			
@@ -47,13 +47,14 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		}
 
 		$scope.userLogin = function (info) {
+			$scope.name=info.name;
 			return $http.post('/authenticate_user', info);
 		}
 
 		$scope.validate_user=function(res) {
 			console.log(res.data);
 			if (res.data==true){
-				$scope.login_info="Welcome";
+
 				$scope.isUserLogin=true;
 			}
 			else{
