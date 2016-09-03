@@ -17,6 +17,17 @@ var user_session_schema = mongoose.Schema({
 });
 var User_session = mongoose.model('user_info', user_session_schema);
 
+
+var user_details_schema = mongoose.Schema({
+    name: String,
+    password:String
+});
+var user_details = mongoose.model('register_users', user_details_schema);
+
+
+
+
+
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -38,11 +49,40 @@ app.post('/users', function(req, res){
 
 
 
+
+
+
+
+
+
 app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/', function(req, res){
    res.sendFile(__dirname + '/index.html');
 });
+
+
+
+app.post('/authenticate_user', function(req, res){
+
+    authenticate_user(req, res);
+});
+
+
+var authenticate_user=function(req, res){
+
+ var query= user_details.find({'name': req.body.name});
+
+ res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+ query.exec( function(err, docs){
+ 
+    if (docs.length==0) return res.json("false");
+    res.json(docs[0].password==req.body.password);
+});  
+}
+
+
+
 
 var remove_user= function(user_name){
  User_session.find({'user_name':user_name}).remove().exec();

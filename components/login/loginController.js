@@ -1,10 +1,11 @@
 
 
-
-smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$location','$http',
-	function($scope, sessionInfo, $location, $http){ 
+smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$location','$http', 'userDetails',
+	function($scope, sessionInfo, $location, $http, userDetails){ 
 		
-		
+		$scope.login_info="";
+		$scope.userDetails=userDetails.isLogged;
+		$scope.userLogin=false;
 		$http.get('/users')
 		.success(function(data) {
 			$scope.usersNumber = data.length;
@@ -28,14 +29,14 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			});
 
 		}
- 
+
 		$scope.enterRoom = function (info) {
 			sessionInfo.set(info);			
 			
 			$scope.name=sessionInfo.get().name;
 			$scope.room=sessionInfo.get().room;
 
-			$http.post('/users', {'user_name':$scope.name,'room_name':$scope.room})
+			$http.get('/users', {'user_name':$scope.name,'room_name':$scope.room})
 			.success(function(data) {
 			})
 			.error(function(data) {
@@ -44,6 +45,24 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 
 			$location.path("chat");
 		}
+
+		$scope.userLogin = function (info) {
+			return $http.post('/authenticate_user', info);
+		}
+
+		$scope.validate_user=function(res) {
+			console.log(res.data);
+			if (res.data==true){
+				$scope.login_info="Welcome";
+				$scope.isUserLogin=true;
+			}
+			else{
+				$scope.login_info="Wrong user or password";
+			}
+		}
+
+
+
 
 		$scope.getMsg = function () {
 			$scope.message = sessionInfo.get();
