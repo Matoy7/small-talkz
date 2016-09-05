@@ -6,7 +6,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		$scope.login_info="";
 		$scope.userDetails=userDetails.isLogged;
 		$scope.userLogin=false;
-		$http.get('/users')
+		$http.get('/online_users')
 		.success(function(data) {
 			$scope.usersNumber = data.length;
 
@@ -36,7 +36,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			$scope.name=sessionInfo.get().name;
 			$scope.room=sessionInfo.get().room;
 
-			$http.get('/users', {'user_name':$scope.name,'room_name':$scope.room})
+			$http.post('/online_users', {'user_name':$scope.name,'room_name':$scope.room})
 			.success(function(data) {
 			})
 			.error(function(data) {

@@ -15,7 +15,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
 
    var updateUsersList =function (){
     $scope.users_list=[];
-    $http.get('/users')
+    $http.get('/online_users')
     .success(function(data) {
       data.forEach(updateUsers);
     })

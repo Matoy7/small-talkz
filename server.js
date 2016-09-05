@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 //get the cat named mike
-app.get('/users', function(req, res){
+app.get('/online_users', function(req, res){
 	get_user(req, res);
 });
 
@@ -43,22 +43,17 @@ app.get('/rooms', function(req, res){
     get_room(req, res);
 });
 
-app.post('/users', function(req, res){
- add_user(req, res);
+app.post('/online_users', function(req, res){
+    add_online_user(req, res);
 });
 
 
-
-
-
-
-
-
+ 
 
 app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/', function(req, res){
-   res.sendFile(__dirname + '/index.html');
+ res.sendFile(__dirname + '/index.html');
 });
 
 
@@ -71,11 +66,11 @@ app.post('/authenticate_user', function(req, res){
 
 var authenticate_user=function(req, res){
 
- var query= user_details.find({'name': req.body.name});
+   var query= user_details.find({'name': req.body.name});
 
- res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
- query.exec( function(err, docs){
- 
+   res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+   query.exec( function(err, docs){
+
     if (docs.length==0) return res.json("false");
     res.json(docs[0].password==req.body.password);
 });  
@@ -85,24 +80,43 @@ var authenticate_user=function(req, res){
 
 
 var remove_user= function(user_name){
- User_session.find({'user_name':user_name}).remove().exec();
+   User_session.find({'user_name':user_name}).remove().exec();
 }  
 
 var get_user= function(req, res){
 
- var query= User_session.find();
- res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+   var query= User_session.find();
+   res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
 
 
- query.exec( function(err, docs){
+   query.exec( function(err, docs){
 
-  res.json(docs);
+      res.json(docs);
 		//mongoose.connection.close();
 
 	});  
 
 }
-var add_user=function(req, res){
+var add_online_user=function(req, res){
+ console.log("sdfffffffffffffffffffff");
+        // create a user, information comes from AJAX request from Angular
+        var new_user_session= { "user_name": req.body.user_name, "room_name": req.body.room_name };
+        User_session.create(new_user_session, function (err, user_session) {
+            console.log(req.body.user_name);
+            if (err){
+              res.send(err);
+          }
+            // get and return all the users after you create another
+            User_session.find(function(err, user_sessions) {
+                if (err)
+                    res.send(err)
+                res.json(user_sessions);
+            });
+        });
+
+    }
+
+var add_register_user=function(req, res){
 
         // create a user, information comes from AJAX request from Angular
         var new_user_session= { "user_name": req.body.user_name, "room_name": req.body.room_name };

@@ -13,11 +13,13 @@ smallTalkzModel.config(function($stateProvider, $urlRouterProvider) {
 		templateUrl : 'components/chat/chatView.html',
 		controller  : 'chatController'
 	})
-	.state('facebook', {
-		url: '/facebook',
-		templateUrl : 'facebook.html',
+	.state('signup', {
+		url: '/signup',
+		templateUrl : 'components/signup/signupView.html',
+		controller  : 'signupController'
 	})
 	$urlRouterProvider.otherwise('/login');
+
 });
 
 
