@@ -57,7 +57,7 @@ app.post('/online_users', function(req, res){
 app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/', function(req, res){
-   res.sendFile(__dirname + '/index.html');
+ res.sendFile(__dirname + '/index.html');
 });
 
 
@@ -74,15 +74,20 @@ app.post('/register_user', function(req, res){
 });
 
 
+app.post('/getUserByMail', function(req, res){
+    getUserByMail(req, res);
+});
+
 var authenticate_user=function(req, res){
 
- var query= user_details.find({'Mail': req.body.Mail});
-
- res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
- query.exec( function(err, docs){
+   var query= user_details.find({'Mail': req.body.Mail});
+ 
+   res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+   query.exec( function(err, docs){
 
     if (docs.length==0) return res.json("false");
-    res.json(docs[0].password==req.body.password);
+ 
+    res.json(docs[0].Password==req.body.Password);
 });  
 }
 
@@ -90,18 +95,18 @@ var authenticate_user=function(req, res){
 
 
 var remove_user= function(user_name){
- User_session.find({'user_name':user_name}).remove().exec();
+   User_session.find({'user_name':user_name}).remove().exec();
 }  
 
 var get_user= function(req, res){
 
- var query= User_session.find();
- res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+   var query= User_session.find();
+   res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
 
 
- query.exec( function(err, docs){
+   query.exec( function(err, docs){
 
-  res.json(docs);
+      res.json(docs);
 		//mongoose.connection.close();
 
 	});  
@@ -129,7 +134,7 @@ var add_online_user=function(req, res){
     var add_register_user=function(req, res){
 
         // create a user, information comes from AJAX request from Angular
- 
+
         var new_user_session= { "FirstName": req.body.FirstName, "LastName": req.body.LastName, 
         "Mail": req.body.Mail, "Password": req.body.Password };
         user_details.create(new_user_session, function (err, user_session) {
@@ -145,6 +150,20 @@ var add_online_user=function(req, res){
         });
 
     }
+
+
+
+    var getUserByMail=function(req, res){
+
+        var new_user_session= { "Mail": req.body.Mail};
+        user_details.find(function(err, user_details) {
+            if (err)
+                res.send(err)
+            res.json(user_details);
+        });
+
+    }
+
 
     var get_room= function(req, res){
         var query= User_session.find();

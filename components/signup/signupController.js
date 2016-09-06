@@ -17,7 +17,8 @@ smallTalkzModel.controller('signupController', ['$scope', 'sessionInfo','$locati
 
 		$scope.register_user = function (info) {
 	 
-			return $http.post('/register_user', info);
+			  $http.post('/register_user', info);
+			  $location.path('login');
 		}
 
 		$scope.NewConversation=false;
