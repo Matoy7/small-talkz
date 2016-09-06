@@ -33,7 +33,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		$scope.enterRoom = function (info) {
 			sessionInfo.set(info);			
 			
-			$scope.name=sessionInfo.get().name;
+			$scope.name=sessionInfo.get().FirstName;
 			$scope.room=sessionInfo.get().room;
 
 			$http.post('/online_users', {'user_name':$scope.name,'room_name':$scope.room})
@@ -47,7 +47,8 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		}
 
 		$scope.userLogin = function (info) {
-			$scope.name=info.name;
+			$scope.FirstName=info.name;
+			$scope.FirstName=info.name;
 			return $http.post('/authenticate_user', info);
 		}
 
@@ -58,7 +59,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 				$scope.isUserLogin=true;
 			}
 			else{
-				$scope.login_info="Wrong user or password";
+				$scope.login_info="Wrong mail or password";
 			}
 		}
 

@@ -20,11 +20,11 @@
 						<br>
 
 
-						<input autocomplete="off" name="name" ng-model="name" required placeholder="Name">
+						<input autocomplete="off" name="Mail" ng-model="Mail" required placeholder="Mail">
 						<br>
-						<input autocomplete="off" type="password" name="password" ng-model="password" required placeholder="Password">
+						<input autocomplete="off" type="Password" name="Password" ng-model="Password" required placeholder="Password">
 						<br><br>
-						<button type="button"  ng-click="userLogin({name:name, password: password}).then(validate_user)">Start Talking!</button>
+						<button type="button"  ng-click="userLogin({Mail:Mail, Password: Password}).then(validate_user)">Start Talking!</button>
 						<br>
 						{{login_info}}
 						<br><i>
