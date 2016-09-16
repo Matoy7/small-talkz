@@ -46,11 +46,21 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			$location.path("chat");
 		}
 
+		var socket = io();
+
 		$scope.userLogin = function (info) {
 			$scope.Mail=info.Mail;
-	 
+			socket.emit('authenticate_user',info);
 			return $http.post('/authenticate_user', info);
 		}
+
+		socket.on('login_succeeded', function(data){
+			console.log('true!!');
+		});
+
+		socket.on('login_failed', function(data){
+			console.log('false.......');
+		});
 
 		$scope.getUserByMail = function (info) {
 			return $http.post('/getUserByMail', info);
