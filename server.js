@@ -31,7 +31,6 @@ var user_details = mongoose.model('register_users', user_details_schema);
 
 
 
-
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -73,24 +72,14 @@ app.post('/authenticate_user', function(req, res){
 });
 
 
-var authenticate_user=function(mail, password){
-	var query = user_details.find({'Mail': mail});
-	return new Promise(function(resolve, reject) {
-		query.exec( function(err, docs){
-			if (docs.length==0) {
-				resolve (false);
-			}
-			else{
-				resolve(docs[0].Password==password);
-			}
-		}); 
-	});
-
-}
 
 
 app.post('/register_user', function(req, res){
-	add_register_user(req, res);
+	var new_user_session= { "FirstName": req.body.FirstName, "LastName": req.body.LastName, 
+	"Mail": req.body.Mail, "Password": req.body.Password };
+	var allUsers = add_register_user(new_user_session).then( function (allUsers){
+		res.json(allUsers);
+	});	
 });
 
 
@@ -120,6 +109,45 @@ var get_user= function(req, res){
 	});  
 
 }
+
+
+var add_register_user=function(new_user_session){
+	return new Promise(function(resolve, reject) {
+        // create a user, information comes from AJAX request from Angular
+        user_details.create(new_user_session, function (err, user_session) {
+        	if (err){
+        		reject (err);
+        	}
+            // get and return all the users after you create another
+            user_details.find(function(err, user_sessions) {
+            	if (err){
+            		reject (err);
+            	}
+            	resolve (user_sessions);
+            });
+        });
+    });
+
+}
+
+
+var authenticate_user=function(mail, password){
+	var query = user_details.find({'Mail': mail});
+	return new Promise(function(resolve, reject) {
+		query.exec( function(err, docs){
+			if (docs.length==0) {
+				resolve (false);
+			}
+			else{
+				resolve(docs[0].Password==password);
+			}
+		}); 
+	});
+
+}
+
+
+
 var add_online_user=function(req, res){
 
         // create a user, information comes from AJAX request from Angular
@@ -138,25 +166,6 @@ var add_online_user=function(req, res){
 
     }
 
-    var add_register_user=function(req, res){
-
-        // create a user, information comes from AJAX request from Angular
-
-        var new_user_session= { "FirstName": req.body.FirstName, "LastName": req.body.LastName, 
-        "Mail": req.body.Mail, "Password": req.body.Password };
-        user_details.create(new_user_session, function (err, user_session) {
-        	if (err){
-        		res.send(err);
-        	}
-            // get and return all the users after you create another
-            user_details.find(function(err, user_sessions) {
-            	if (err)
-            		res.send(err)
-            	res.json(user_sessions);
-            });
-        });
-
-    }
 
 
 
@@ -208,6 +217,13 @@ var add_online_user=function(req, res){
     			}
     		})
     	});
+
+    	socket.on('register_user', function(data){
+    		add_register_user(data).then(function(isValid){
+    			console.log('registered');
+    		})
+    	});
+
 
     	socket.on('chat_message', function(data){
     		socket.broadcast.to(data.room).emit('chat_message',data.msg);

@@ -50,7 +50,6 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 
 		$scope.userLogin = function (info) {
 			$scope.Mail=info.Mail;
-			socket.emit('authenticate_user',info);
 			return $http.post('/authenticate_user', info);
 		}
 
