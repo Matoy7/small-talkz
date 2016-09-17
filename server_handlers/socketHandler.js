@@ -1,7 +1,7 @@
  
 var socketio = require('socket.io');
 
-module.exports.listen = function(http){
+module.exports.listen = function(http, httpRequesetHandler){
     var io = require('socket.io')(http);
     io.on('connection', function(socket){
 
@@ -50,7 +50,7 @@ module.exports.listen = function(http){
         });
 
         socket.on('disconnect', function(){
-           // remove_user(socket.user);
+           httpRequesetHandler.remove_user(socket.user);
             console.log('Bye '+socket.user);
             io.emit('chat message', "Bye");
 

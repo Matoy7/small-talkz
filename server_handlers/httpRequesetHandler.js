@@ -30,7 +30,10 @@ var user_details = mongoose.model('register_users', user_details_schema);
 
 //get the cat named mike
 app.get('/online_users', function(req, res){
-	get_user(req, res);
+    res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+    get_user().then( function (online_users){
+        res.json(online_users);
+    });  
 });
 
 app.get('/rooms', function(req, res){
@@ -40,10 +43,6 @@ app.get('/rooms', function(req, res){
 app.post('/online_users', function(req, res){
 	add_online_user(req, res);
 });
-
-
-
-
 
 
 app.get('/', function(req, res){
@@ -86,20 +85,15 @@ var remove_user= function(user_name){
 	User_session.find({'user_name':user_name}).remove().exec();
 }  
 
-var get_user= function(req, res){
+var get_user= function(){
+    return new Promise(function(resolve, reject) {
+     var query= User_session.find();
+     query.exec( function(err, docs){
+      resolve (docs);
+  });  
+ })
+};
 
-	var query= User_session.find();
-	res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
-
-
-	query.exec( function(err, docs){
-
-		res.json(docs);
-        //mongoose.connection.close();
-
-    });  
-
-}
 
 
 var add_register_user=function(new_user_session){

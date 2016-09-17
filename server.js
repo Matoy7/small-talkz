@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, '/')));
 var httpRequesetHandler = require('./server_handlers/httpRequesetHandler.js').getHttpRequestHandler(mongoose, app);
 
 
-var io = require('./server_handlers/socketHandler.js').listen(http);
+var io = require('./server_handlers/socketHandler.js').listen(http, httpRequesetHandler);
 
 
     http.listen((process.env.PORT || 3000), function(){
