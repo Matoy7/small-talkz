@@ -14,14 +14,16 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 
-var httpRequesetHandler = require('./server_handlers/httpRequesetHandler.js').getHttpRequestHandler(mongoose, app);
+var dbHandler = require('./server_handlers/dbHandler.js');
+var httpRequesetHandler = require('./server_handlers/httpRequesetHandler.js').getHttpRequestHandler(dbHandler, app);
 
+ 
 
-var io = require('./server_handlers/socketHandler.js').listen(http, httpRequesetHandler);
+var io = require('./server_handlers/socketHandler.js').listen(http, dbHandler);
 
 
     http.listen((process.env.PORT || 3000), function(){
-    	//User_session.find({}).remove().exec();
+    	 dbHandler.get_random_room();
 
     	console.log('listening on *:3000 '+ __dirname);
     });
