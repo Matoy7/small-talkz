@@ -40,14 +40,13 @@ module.exports = {
 
 
 add_register_user : function(new_user_session){
+ 
   return new Promise(function(resolve, reject) {
-        // create a user, information comes from AJAX request from Angular
-        user_details.create(new_user_session, function (err, user_session) {
+         user_details.create(new_user_session, function (err, user_session) {
           if (err){
             reject (err);
           }
-            // get and return all the users after you create another
-            user_details.find(function(err, user_sessions) {
+             user_details.find(function(err, user_sessions) {
               if (err){
                 reject (err);
               }

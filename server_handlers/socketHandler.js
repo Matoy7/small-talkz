@@ -50,11 +50,11 @@ module.exports.listen = function(http, dbHandler){
         });
 
         socket.on('disconnect', function(){
-           dbHandler.remove_user(socket.user);
-            console.log('Bye '+socket.user);
-            io.emit('chat message', "Bye");
+         dbHandler.remove_user(socket.user);
+         console.log('Bye '+socket.user);
+         io.emit('chat message', "Bye");
 
-        }); 
+     }); 
 
     });
     
