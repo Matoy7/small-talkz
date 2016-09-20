@@ -20,6 +20,7 @@ app.get('/rooms', function(req, res){
 
 app.post('/online_users', function(req, res){
   dbHandler.add_online_user(req.body.user_name, req.body.room_name).then(function (online_users){
+   
     res.json(online_users);
 });
 });

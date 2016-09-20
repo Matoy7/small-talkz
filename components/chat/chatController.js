@@ -17,6 +17,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
     $scope.users_list=[];
     $http.get('/online_users')
     .success(function(data) {
+
       data.forEach(updateUsers);
     })
     .error(function(data) {
@@ -25,6 +26,9 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
   };
 
   function updateUsers(element, index, array) {
+     console.log('element---->'+element);
+     console.log('index---->'+index);
+     console.log('array---->'+array);
     $scope.users_list.push(element.user_name);
   }
 

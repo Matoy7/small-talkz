@@ -31,10 +31,13 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		}
 
 		$scope.enterRoom = function (info) {
+
+
 			sessionInfo.set(info);			
-			
-			$scope.name=sessionInfo.get().FirstName;
+
+			$scope.name=sessionInfo.get().name;
 			$scope.room=sessionInfo.get().room;
+			
 
 			$http.post('/online_users', {'user_name':$scope.name,'room_name':$scope.room})
 			.success(function(data) {
@@ -66,7 +69,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 		}
 
 		$scope.validate_user=function(res) {
-			console.log(res.data);
+	 
 			if (res.data==true){
 
 				$scope.isUserLogin=true;
