@@ -7,13 +7,20 @@
  var assert = require('assert');
  var mongoose = require('mongoose');
  var bodyParser = require('body-parser');
-
+ var jwt = require('jsonwebtoken'); 
+ var expressJwt = require('express-jwt'); 
+ var secret = 'ssasDSA223Sasdas2sdsa23123dvxcgyew231';
+ 
  // ---------------- config the app
  app.use(bodyParser.urlencoded({
  	extended: true
  }));
+ 
  app.use(bodyParser.json());
  app.use(express.static(path.join(__dirname, '/')));
+
+ app.use('/restricted', expressJwt({secret: secret}));
+
 
  // ---------------- define the server handlers (internal dependencies)
  var dbHandler = require('./server_modules/dbHandler.js');
