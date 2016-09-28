@@ -1,0 +1,54 @@
+ 
+<body >
+	<div id="loginPage">
+		
+		<div id="owl-example" class="jumbotron text-center">
+
+			<div  >
+				Welcome {{ Mail }}
+			</div>
+		 
+
+			<h1>Small-Talkz</h1>
+			<br>
+			Right now there are {{usersNumber}} users talking in {{usersNumber}} talks
+			<br><br>
+
+			<div>
+				<form name="mainForm" width="70%">
+
+					<br>
+ 
+				<div>
+					<button type="button" ng-click="NewConversation=true;JoinConversation=false" >New Conversation</button>
+					<button type="button" id="join" ng-click="NewConversation=false;JoinConversation=true;randomRoomButtonClass=false" >Join Conversation
+					</button>
+					<br><br>
+					<div ng-if="NewConversation">
+						<input autocomplete="off" name="name" ng-model="name" required placeholder="Name">
+						<br>
+						<input autocomplete="off" name="room" ng-model="room" required placeholder="Room">
+						<br><br>
+						<button type="button"  ng-click="enterRoom({name: name,room: room})">Start Talking!</button>
+					</div>
+					<div ng-if="JoinConversation">
+						<button type="button"  ng-click="randomRoomButtonClass=true;getRandomRoom()">Random conversation!</button>
+						<div ng-if="randomName && randomRoom" class="jumbotron text-center">
+
+							<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomName}}</li>
+							<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomRoom}}</li>
+							<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: randomName,room: randomRoom})">Enter!
+							</button>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</form>
+
+	</div>
+</div>
+</div>
+
+</body>

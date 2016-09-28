@@ -13,6 +13,11 @@ smallTalkzModel.config(function($stateProvider, $urlRouterProvider) {
 		templateUrl : 'components/chat/chatView.html',
 		controller  : 'chatController'
 	})
+	.state('main', {
+		url: '/main',
+		templateUrl : 'components/main/mainView.html',
+		controller  : 'mainController'
+	})
 	.state('signup', {
 		url: '/signup',
 		templateUrl : 'components/signup/signupView.html',
@@ -23,12 +28,13 @@ smallTalkzModel.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
-smallTalkzModel.factory('userDetails', [function() {
-	return {
-		isLogged: false,
-		username: ''
-	};
-}]);
+smallTalkzModel.factory('userDetails', ["$cookies",
+	function($cookies) {
+		return {
+			isLogged: ($cookies.get('token')!=undefined),
+			username: $cookies.get('token')
+		};
+	}]);
 
 smallTalkzModel.factory('sessionInfo', function() {
 	var savedInfo = {}

@@ -1,6 +1,6 @@
 
 
-smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$location','$http', 'userDetails',
+smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo','$location','$http', 'userDetails',
 	function($scope, sessionInfo, $location, $http, userDetails){ 
 		
 		$scope.login_info="";
@@ -55,6 +55,14 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 			return $http.post('/authenticate_user', info);
 		}
 
+		socket.on('login_succeeded', function(data){
+			console.log('true!!');
+		});
+
+		socket.on('login_failed', function(data){
+			console.log('false.......');
+		});
+
 		$scope.getUserByMail = function (info) {
 			return $http.post('/getUserByMail', info);
 		}
@@ -63,7 +71,7 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo','$locatio
 	 
 			if (res.data==true){
 
-				$location.path("main");
+				$scope.isUserLogin=true;
 			}
 			else{
 				$scope.login_info="Wrong mail or password";
