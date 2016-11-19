@@ -10,7 +10,7 @@ html body {
 .hotTopicsLeft {
 	left: 0
 }
-#loginPage:before {
+#enterPage:before {
 	content: '';
 	position: fixed;
 	top: 0;
@@ -22,7 +22,7 @@ html body {
 	background-repeat: no-repeat;
 	z-index: -1
 }
-#loginPage:after {
+#enterPage:after {
 	content: '';
 	position: fixed;
 	top: 0;
@@ -295,7 +295,6 @@ html body {
 	margin-left: 1em;
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	display: inline;
-}
 }
 .chat button {
 	width: calc(5em);

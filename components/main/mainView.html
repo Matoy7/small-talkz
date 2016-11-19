@@ -1,14 +1,16 @@
  
 <body >
-	<div id="loginPage">
-		
-		<div id="owl-example" class="jumbotron text-center">
-
+	<div id="enterPage"> 
+ 
+	<div  class="text-right">
+	<button type="button"  ng-click="logoff()">logoff</button>
+		</div>
+				<div id="owl-example" class="jumbotron text-center">
+	
 			<div  >
-				Welcome {{ Mail }}
+				Welcome {{ userMail }}
 			</div>
 		 
-
 			<h1>Small-Talkz</h1>
 			<br>
 			Right now there are {{usersNumber}} users talking in {{usersNumber}} talks
@@ -16,6 +18,7 @@
 
 			<div>
 				<form name="mainForm" width="70%">
+					
 
 					<br>
  

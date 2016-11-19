@@ -1,49 +1,69 @@
 
 
-smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo','$location','$http', 'userDetails',
-	function($scope, sessionInfo, $location, $http, userDetails){ 
-		
-		$scope.login_info="";
-		$scope.userLogin=userDetails.isLogged;;
+smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$location', '$http', 'userDetails', 'jwtHelper', '$localStorage',
+	function ($scope, sessionInfo, $location, $http, userDetails, jwtHelper, $localStorage) {
+
+
+		$http.get('/decodeToken')
+			.success(function (data) {
+				loadUserDetails(data);
+			})
+			.error(function (data) {
+				console.log('Error: ' + data);
+			});
+			
+		var loadUserDetails = function (data) {
+			$scope.userMail = data.Mail;
+		}
+		$scope.login_info = "";
+		$scope.userLogin = userDetails.isLogged;
+
+		var jwt = $localStorage.jwt;
+		var decodedJwt = jwt && jwtHelper.decodeToken(jwt);
+
+
 		$http.get('/online_users')
-		.success(function(data) {
-			$scope.usersNumber = data.length;
+			.success(function (data) {
+				$scope.usersNumber = data.length;
 
-		})
-		.error(function(data) {
-			console.log('Error: ' + data);
-		});
+			})
+			.error(function (data) {
+				console.log('Error: ' + data);
+			});
 
-		$scope.NewConversation=false;
-		
+		$scope.NewConversation = false;
+
+
+
+
 
 		$scope.getRandomRoom = function () {
 			$http.get('/rooms')
-			.success(function(data) {
-				$scope.randomName = "guest";
-				$scope.randomRoom = data.room_name;
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
+				.success(function (data) {
+					$scope.randomName = "guest";
+					$scope.randomRoom = data.room_name;
+				})
+				.error(function (data) {
+					console.log('Error: ' + data);
+				});
 
 		}
 
 		$scope.enterRoom = function (info) {
 
 
-			sessionInfo.set(info);			
+			sessionInfo.set(info);
 
-			$scope.name=sessionInfo.get().name;
-			$scope.room=sessionInfo.get().room;
-			
+			$scope.name = sessionInfo.get().name;
+			$scope.room = sessionInfo.get().room;
 
-			$http.post('/online_users', {'user_name':$scope.name,'room_name':$scope.room})
-			.success(function(data) {
-			})
-			.error(function(data) {
-				console.log('Error:'+ data);
-			});
+
+			$http.post('/online_users', { 'user_name': $scope.name, 'room_name': $scope.room })
+				.success(function (data) {
+				})
+				.error(function (data) {
+					console.log('Error:' + data);
+				});
 
 			$location.path("chat");
 		}
@@ -51,30 +71,34 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo','$location
 		var socket = io();
 
 		$scope.userLogin = function (info) {
-			$scope.Mail=info.Mail;
+			$scope.Mail = info.Mail;
 			return $http.post('/authenticate_user', info);
 		}
+		$scope.logoff = function () {
+			$localStorage.$reset();
+			$location.path('login');
+		}
 
-		socket.on('login_succeeded', function(data){
-			console.log('true!!');
+		socket.on('login_succeeded', function (data) {
+			console.log('login had ssucceeded');
 		});
 
-		socket.on('login_failed', function(data){
-			console.log('false.......');
+		socket.on('login_failed', function (data) {
+			console.log('login had failed');
 		});
 
 		$scope.getUserByMail = function (info) {
 			return $http.post('/getUserByMail', info);
 		}
 
-		$scope.validate_user=function(res) {
-	 
-			if (res.data==true){
+		$scope.validate_user = function (res) {
 
-				$scope.isUserLogin=true;
+			if (res.data == true) {
+
+				$scope.isUserLogin = true;
 			}
-			else{
-				$scope.login_info="Wrong mail or password";
+			else {
+				$scope.login_info = "Wrong mail or password";
 			}
 		}
 
