@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose');
 
-var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
+var url = 'mongodb://localhost:27017/small-talkz';
 mongoose.connect(url);
 
 
