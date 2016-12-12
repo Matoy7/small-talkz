@@ -20,40 +20,18 @@ html {
 	border-radius: 3px;
 	overflow: hidden;
 }
-.jumbotron #hotTopics {
 
-	left: 100%;
-	width: 100%;
-	transition: 0.5s all ease
+#login_form_button {
+	height: 25px;
 }
-.jumbotron #hotTopics ul {
-	list-style: none;
-	width: 160px;
-	margin: 0 auto;
-	padding: 0;
-	display: inline-block;
-	text-align: center
-}
-.jumbotron #hotTopics ul li {
-	border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border: 2px solid white;
-	width: 30px;
-	height: 30px;
-	padding: 10px;
-	transition: all .5s ease;
-	cursor: pointer
-}
-.jumbotron #hotTopics ul li:hover {
-	background: rgba(255, 255, 255, 0.5)
-}
+
 .jumbotron h1 {
 	color: white;
 	font-size: 3.4em;
 	margin-bottom: 0;
 	text-shadow: 2px 4px 3px rgba(255, 255, 255, 0.5)
 }
+
 .jumbotron button {
 	background: rgba(0, 0, 0, 0);
 	border: 1px solid #c6c6c6;
@@ -67,9 +45,11 @@ html {
 	cursor: pointer;
 	transition: 0.2s all ease
 }
+
 .jumbotron button:hover {
 	background: rgba(255, 255, 255, 0.5)
 }
+
 .jumbotron input {
 	border: 1px solid #dfdfdf;
 	padding-left: 0.5em;
@@ -79,32 +59,9 @@ html {
 	margin-top: 0.7em;
 	color: white
 }
-.jumbotron input::-webkit-input-placeholder {
-	color: #bebebb
-}
-.jumbotron input:-moz-placeholder {
-	color: #bebebb
-}
-.jumbotron input::-moz-placeholder {
-	color: #bebebb
-}
-.jumbotron input:-ms-input-placeholder {
-	color: #bebebb
-}
-.jumbotron .welcome img {
-	border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border: 2px solid white;
-	width: 30px;
-	height: auto;
-	padding: 10px;
-	transition: all .5s ease;
-	cursor: pointer
-}
-.jumbotron .welcome img:hover {
-	background: rgba(255, 255, 255, 0.5)
-}
+
+
+
 .ng-scope {
 	max-width: 1000px;
 	margin: 0 auto

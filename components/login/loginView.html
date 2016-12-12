@@ -5,7 +5,7 @@
 
 	<div id="enterPage">
 		
-		<div id="owl-example" class="jumbotron text-center">
+		<div class="jumbotron text-center">
 
 	 
 
@@ -23,9 +23,9 @@
 						<br>
 
 
-						<input autocomplete="off" name="Mail" ng-model="Mail" required placeholder="Mail">
+						<input autocomplete="off" name="Mail" ng-model="Mail" required placeholder="Mail" id="login_form_button" >
 						<br>
-						<input autocomplete="off" type="Password" name="Password" ng-model="Password" required placeholder="Password">
+						<input autocomplete="off" type="Password" name="Password" ng-model="Password" required placeholder="Password" id="login_form_button" >
 						<br><br>
 						<button type="button"  ng-click="userLogin({Mail:Mail, Password: Password}).then(validate_user)">Start Talking!</button>
 						<br>
