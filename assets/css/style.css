@@ -212,7 +212,7 @@ a:hover{
 }
 .chat .messages:after {
 	content: "";
-	background: url('../img/background.jpg');
+
 	opacity: 0.5;
 	top: 0;
 	left: 0;
