@@ -25,6 +25,8 @@ html {
 	z-index: 1;
 	margin: 15% 25% auto;
 
+	text-align: center;
+
 	background: -webkit-linear-gradient(#0e203d	,#7ba4e5); /* For Safari 5.1 to 6.0 */
 	background: -o-linear-gradient(#0e203d, #7ba4e5); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(#0e203d, #7ba4e5); /* For Firefox 3.6 to 15 */
