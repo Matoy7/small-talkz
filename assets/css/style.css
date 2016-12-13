@@ -225,7 +225,7 @@ a:hover{
 	border-radius: 5px;
 	box-sizing: border-box;
 	font-size: 1em;
-	width: calc(100% - 5em);
+	width: 83%;
 	line-height: 1.9em;
 	padding-left: 0.7em;
 	margin: 1em;
@@ -236,7 +236,7 @@ a:hover{
 	display: inline;
 }
 .chat button {
-	width: calc(5em);
+	width: 10%;
 	box-sizing: border-box;
 	display: inline;
 	line-height: 1.9em;
