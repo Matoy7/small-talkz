@@ -16,17 +16,12 @@
 					<div ng-if="!isUserLogin"  >
 
 
-						<input autocomplete="off" name="FirstName" ng-model="FirstName" required placeholder="First Name">
-						<br>	
-						<input autocomplete="off" name="LastName" ng-model="LastName" required placeholder="Last Name">
-						<br><br>	
 						<input autocomplete="off" name="Mail" ng-model="Mail" required placeholder="Mail">
 
 						<br>	<br>
 						<input autocomplete="off" type="Password" name="Password" ng-model="Password" required placeholder="Password">
 						<br> 
-						<input autocomplete="off" type="password" name="ConfirmPassword" ng-model="ConfirmPassword" required placeholder="Confirm Password">
-						<br><br>
+
 				  
 						<button type="button"  ng-click="register_user({FirstName:FirstName,LastName:LastName,Mail:Mail,Password:Password});">Sign Up!</button>
 						<br>
