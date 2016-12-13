@@ -21,8 +21,19 @@ html {
 	overflow: hidden;
 }
 
-#login_form_button {
+#login_form {
 	height: 25px;
+}
+
+a, a:visited {
+	color: #f7f7f7;
+	text-decoration:none;
+	font-size: 104%;
+	font-weight: bold;
+}
+
+a:hover{
+	text-decoration: underline;
 }
 
 .jumbotron h1 {
@@ -55,16 +66,15 @@ html {
 	padding-left: 0.5em;
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 4px;
-	line-height: 1.9em;
+	height: 28px;
 	margin-top: 0.7em;
 	color: white
 }
 
-
-
 .ng-scope {
 	max-width: 1000px;
-	margin: 0 auto
+	margin: 0 auto;
+	vertical-align: text-top;
 }
 .visible {
 	display: block !important
