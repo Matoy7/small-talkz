@@ -6,6 +6,19 @@ html {
 	background-size:cover;
 }
 
+
+.left-half {
+	position: absolute;
+	left: 0px;
+	padding-left: 10%;
+}
+
+.right-half {
+	position: absolute;
+	right: 0px;
+	padding-right: 10%;
+}
+
 .jumbotron {
 	color: white;
 	font-family: 'sans-serif';
@@ -19,6 +32,7 @@ html {
 	opacity: 0.9;
 	border-radius: 3px;
 	overflow: hidden;
+	position:relative;
 }
 
 #login_form {

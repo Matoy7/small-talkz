@@ -1,40 +1,32 @@
- 
+
 <body >
-	<div id="enterPage">
-		
-		<div id="owl-example" class="jumbotron text-center">
-			<div ng-if="isUserLogin">
-				Welcome {{ name }}
-			</div>
-			<h1>Small-Talkz</h1>
+<div id="enterPage">
+
+	<div id="owl-example" class="jumbotron text-center">
+		<div ng-if="isUserLogin">
+			Welcome {{ name }}
+		</div>
+		<h1>Small-Talkz</h1>
 
 
-			<div>
-				<form name="loginForm" width="70%">
+		<div>
+			<form name="loginForm" width="70%">
 
+				<br>
+				<div ng-if="!isUserLogin"  >
+					<input autocomplete="off" name="Mail" ng-model="Mail" required placeholder="Mail">
 					<br>
-					<div ng-if="!isUserLogin"  >
-
-
-						<input autocomplete="off" name="Mail" ng-model="Mail" required placeholder="Mail">
-
-						<br>	<br>
-						<input autocomplete="off" type="Password" name="Password" ng-model="Password" required placeholder="Password">
-						<br> 
-
-				  
-						<button type="button"  ng-click="register_user({FirstName:FirstName,LastName:LastName,Mail:Mail,Password:Password});">Sign Up!</button>
-						<br>
-
-					</div>
-
-
-
+					<input autocomplete="off" type="Password" name="Password" ng-model="Password" required placeholder="Password">
+					<br>
+					<button type="button"  ng-click="register_user({FirstName:FirstName,LastName:LastName,Mail:Mail,Password:Password});">Sign up</button>
+					<br>
 				</div>
-			</form>
 
+
+			</form>
 		</div>
 	</div>
 </div>
+
 
 </body>
