@@ -19,20 +19,20 @@ html {
 	padding-right: 10%;
 }
 
-.jumbotron {
+.menu-box {
 	color: white;
 	font-family: 'sans-serif';
 	z-index: 1;
-	margin: 0 auto;
-	background-color: rgba(0, 0, 0, 0.2);
+	margin: 15% 25% auto;
 	width: 380px !important;
-	height: 460px;
+	height: 500px;
 	box-shadow: 0px 0px 4px #bebebe;
-	margin-top: 1em;
+	padding: 40px;
 	opacity: 0.9;
 	border-radius: 3px;
 	overflow: hidden;
 	position:relative;
+	background-color: #162b4f;
 }
 
 #login_form {
@@ -50,14 +50,14 @@ a:hover{
 	text-decoration: underline;
 }
 
-.jumbotron h1 {
+.menu-box h1 {
 	color: white;
 	font-size: 3.4em;
 	margin-bottom: 0;
 	text-shadow: 2px 4px 3px rgba(255, 255, 255, 0.5)
 }
 
-.jumbotron button {
+.menu-box button {
 	background: rgba(0, 0, 0, 0);
 	border: 1px solid #c6c6c6;
 	padding: 0.2em 0.6em;
@@ -71,11 +71,11 @@ a:hover{
 	transition: 0.2s all ease
 }
 
-.jumbotron button:hover {
+.menu-box button:hover {
 	background: rgba(255, 255, 255, 0.5)
 }
 
-.jumbotron input {
+.menu-box input {
 	border: 1px solid #dfdfdf;
 	padding-left: 0.5em;
 	background: rgba(255, 255, 255, 0.1);
