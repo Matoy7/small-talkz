@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose');
 
-var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
+var url = 'mongodb://localhost:27017/small-talkz';
 mongoose.connect(url);
 
 
@@ -10,7 +10,7 @@ var user_session_schema = mongoose.Schema({
   user_name: String,
   room_name: String
 });
-var User_session = mongoose.model('user_info', user_session_schema);
+var user_session = mongoose.model('user_info', user_session_schema);
 
 
 var user_details_schema = mongoose.Schema(
@@ -25,12 +25,12 @@ var user_details = mongoose.model('register_users', user_details_schema);
 module.exports = {
 
   remove_user: function (user_name) {
-    User_session.find({ 'user_name': user_name }).remove().exec();
+    user_session.find({ 'user_name': user_name }).remove().exec();
   },
 
   get_user: function () {
     return new Promise(function (resolve, reject) {
-      var query = User_session.find();
+      var query = user_session.find();
       query.exec(function (err, docs) {
         resolve(docs);
       });
@@ -80,12 +80,12 @@ module.exports = {
 
     var new_user_session = { "user_name": user_name, "room_name": room_name };
     return new Promise(function (resolve, reject) {
-      User_session.create(new_user_session, function (err, user_session) {
+      user_session.create(new_user_session, function (err, user_sessions) {
         if (err) {
           reject(err);
         }
 
-        User_session.find(function (err, user_sessions) {
+        user_session.find(function (err, user_sessions) {
           if (err) {
             reject(err);
           }
@@ -111,12 +111,12 @@ module.exports = {
   },
 
   remove_all_online_users: function () {
-    User_session.find({}).remove().exec();
+    user_session.find({}).remove().exec();
 
   },
 
   get_random_room: function () {
-    var query = User_session.find();
+    var query = user_session.find();
     return new Promise(function (resolve, reject) {
       query.exec(function (err, docs) {
         randomIndex = Math.floor(Math.random() * docs.length)

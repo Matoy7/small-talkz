@@ -26,9 +26,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
   };
 
   function updateUsers(element, index, array) {
-     console.log('element---->'+element);
-     console.log('index---->'+index);
-     console.log('array---->'+array);
+ 
     $scope.users_list.push(element.user_name);
   }
 
@@ -39,10 +37,10 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo','$q','$tim
   socket.emit('new_user',{room: $scope.room, name: $scope.name});
 
   $scope.submit=function(){
-    socket.emit('chat_message',{ room: $scope.room, msg: $scope.name+": "+$scope.insertedText });
+    socket.emit('chat_message',{ room: $scope.room, msg: $scope.insertedText });
 
     message={
-      txt: $scope.name+": "+$scope.insertedText,
+      txt: $scope.insertedText,
       sender: true
     }
     $scope.messages.push(message);

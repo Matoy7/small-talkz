@@ -29,19 +29,17 @@
 							</button>
 							<br><br>
 							<div ng-if="NewConversation">
-								<input autocomplete="off" name="name" ng-model="name" required placeholder="Name">
-								<br>
 								<input autocomplete="off" name="room" ng-model="room" required placeholder="Room">
 								<br><br>
-								<button type="button"  ng-click="enterRoom({name: name,room: room})">Start Talking!</button>
+								<button type="button"  ng-click="enterRoom({name: userMail,room: room})">Start Talking!</button>
 							</div>
 							<div ng-if="JoinConversation">
 								<button type="button"  ng-click="randomRoomButtonClass=true;getRandomRoom()">Random conversation!</button>
 								<div ng-if="randomName && randomRoom" class="jumbotron text-center">
 
-									<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomName}}</li>
+	 
 									<li ng-if="randomRoomButtonClass"  style="list-style: none;">{{randomRoom}}</li>
-									<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: randomName,room: randomRoom})">Enter!
+									<button type="button"  ng-if="randomRoomButtonClass" ng-click="enterRoom({name: userMail,room: randomRoom})">Enter!
 									</button>
 								</div>
 							</div>

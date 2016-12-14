@@ -13,30 +13,7 @@ module.exports.listen = function(http, dbHandler){
         socket.on('user', function(user) {
             socket.user=user;
         });
-
-        socket.on('authenticate_user', function(data){
-            authenticate_user(data.Mail, data.Password).then(function(isValid){
-                if (isValid){
-                    socket.emit('login_succeeded');
-                }
-                else{
-                    socket.emit('login_failed');
-                }
-            })
-        });
-
-        socket.on('register_user', function(data){
-            add_register_user(data).then(function(isValid){
-                if (isValid){
-                    socket.emit('register_succeeded');
-                }
-                else{
-                    socket.emit('register_failed');
-                }
-            })
-        });
-
-
+ 
         socket.on('chat_message', function(data){
             socket.broadcast.to(data.room).emit('chat_message',data.msg);
         });

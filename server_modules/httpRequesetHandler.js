@@ -100,10 +100,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
         }
         );
     });
-
-
-
-
+ 
     app.post('/register_user', function (req, res) {
         var new_user_session = {
             "Mail": req.body.Mail, "Password": req.body.Password
