@@ -35,7 +35,8 @@ var httpRequesetHandler = require('./server_modules/httpRequesetHandler.js').get
 var io = require('./server_modules/socketHandler.js').listen(http, dbHandler);
 
 // ---------------- start the server
-http.listen((process.env.PORT || 3000), function () {
-	dbHandler.get_random_room();
-	console.log('listening on *:3000 ' + __dirname);
+var listen_port=(process.env.PORT || 3000);
+http.listen(listen_port, function () {
+	dbHandler.remove_all_data();
+	console.log('listening on port: ' +listen_port);
 });
