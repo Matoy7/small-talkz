@@ -55,14 +55,21 @@ module.exports = {
     },
 
     authenticate_user: function (mail, password) {
+
         var query = register_user.find({ 'Mail': mail });
         return new Promise(function (resolve, reject) {
-            query.exec(function (err, docs) {
-                if (docs.length == 0) {
+            register_user.findOne({ 'Mail': mail }, 'Password', function (err, user) {
+                if (err) {
                     resolve(false);
+                    return;
                 }
-                else {
-                    resolve(docs[0].Password == password);
+                if (user==null){
+                    resolve(false);
+                    return;
+                }
+                else{
+                    resolve(user.Password == password);
+                    return;
                 }
             });
         });
