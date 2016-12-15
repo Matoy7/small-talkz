@@ -6,129 +6,112 @@ var url = 'mongodb://localhost:27017/small-talkz';
 mongoose.connect(url);
 
 
-//creating the model
+// ------- creating the user sessions model -------
 var user_session_schema = mongoose.Schema({
-  user_name: String,
-  room_name: String
+    user_name: String,
+    room_name: String
 });
 var user_session = mongoose.model('user_info', user_session_schema);
 
-
-var user_details_schema = mongoose.Schema(
-  {
+// ------- creating the register users model -------
+var register_user_schema = mongoose.Schema({
     Mail: String,
     Password: String
-  });
-var user_details = mongoose.model('register_users', user_details_schema);
+});
+var register_user = mongoose.model('register_users', register_user_schema);
 
 module.exports = {
-  remove_user: function (user_name) {
-    user_session.find({ 'user_name': user_name }).remove().exec();
-  },
+    remove_user: function (user_name) {
+        user_session.find({ 'user_name': user_name }).remove().exec();
+    },
 
-  get_user: function () {
-    return new Promise(function (resolve, reject) {
-      var query = user_session.find();
-      query.exec(function (err, docs) {
-        resolve(docs);
-      });
-    })
-  },
+    get_user: function () {
+        return new Promise(function (resolve, reject) {
+            var query = user_session.find();
+            query.exec(function (err, docs) {
+                resolve(docs);
+            });
+        })
+    },
 
+    is_mail_already_exists: function (new_user) {
+        return new Promise(function (resolve, reject) {
+            register_user.find({ Mail: new_user }, function (err, found_user) {
+                resolve(found_user.length != 0);
+            });
+        })
+    },
 
-  is_mail_already_exists: function (new_user) {
-       
- 
+    add_register_user: function (user) {
+        return new Promise(function (resolve, reject) {
+            var new_register_user = new register_user(user);
+            new_register_user.save(function (err, user) {
+                if (err)  {reject(err);}
+                else{
+                    resolve(user);
+                }
+            });
+        })
+    },
 
-    return new Promise(function (resolve, reject) {
-      user_details.find({ Mail: new_user }, function (err, found_user) {
-        resolve(found_user.length != 0);
-      });
-    })
-  },
-
-
-  add_register_user: function (new_user) {
-
-    return new Promise(function (resolve, reject) {
-      user_details.create(new_user, function (err, new_user) {
-        if (err) {
-          reject(err);
-        }
-        user_details.find(function (err, new_user) {
-          if (err) {
-            reject(err);
-          }
-          resolve();
+    authenticate_user: function (mail, password) {
+        var query = register_user.find({ 'Mail': mail });
+        return new Promise(function (resolve, reject) {
+            query.exec(function (err, docs) {
+                if (docs.length == 0) {
+                    resolve(false);
+                }
+                else {
+                    resolve(docs[0].Password == password);
+                }
+            });
         });
-      });
-    })
-  },
 
+    },
 
-  authenticate_user: function (mail, password) {
+    add_online_user: function (user_name, room_name) {
 
+        var new_user_session = { "user_name": user_name, "room_name": room_name };
+        return new Promise(function (resolve, reject) {
+            var new_online_user = new user_session(new_user_session);
+            new_online_user.save(function (err, user) {
+                if (err)  {
+                    reject(err);
+                }
+                else{
+                    resolve(user);
+                }
+            });
+        })
+    },
 
-    var query = user_details.find({ 'Mail': mail });
-    return new Promise(function (resolve, reject) {
-      query.exec(function (err, docs) {
-        if (docs.length == 0) {
-          resolve(false);
-        }
-        else {
-          resolve(docs[0].Password == password);
-        }
-      });
-    });
+    getUserByMail: function (mail) {
 
-  },
+        var new_user_session = { "Mail": mail };
 
-  add_online_user: function (user_name, room_name) {
+        return new Promise(function (resolve, reject) {
+            register_user.find(function (err, register_user) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(register_user);
+            });
+        })
+    },
 
-    var new_user_session = { "user_name": user_name, "room_name": room_name };
-    return new Promise(function (resolve, reject) {
-      user_session.create(new_user_session, function (err, user_sessions) {
-        if (err) {
-          reject(err);
-        }
+    remove_all_data: function () {
+        user_session.find({}).remove().exec();
+    },
 
-        user_session.find(function (err, user_sessions) {
-          if (err) {
-            reject(err);
-          }
-          resolve(user_sessions);
+    get_random_room: function () {
+        var query = user_session.find();
+        return new Promise(function (resolve, reject) {
+            query.exec(function (err, docs) {
+                randomIndex = Math.floor(Math.random() * docs.length)
+                resolve(docs[randomIndex]);
+                //mongoose.connection.close();
+            });
         });
-      });
-    })
-  },
+    }
 
-
-  getUserByMail: function (mail) {
-
-    var new_user_session = { "Mail": mail };
-
-    return new Promise(function (resolve, reject) {
-      user_details.find(function (err, user_details) {
-        if (err) {
-          reject(err);
-        }
-        resolve(user_details);
-      });
-    })
-  },
-
-  remove_all_data: function () {
-    user_session.find({}).remove().exec();
-  },
-
-  get_random_room: function () {
-    var query = user_session.find();
-    return new Promise(function (resolve, reject) {
-      query.exec(function (err, docs) {
-        randomIndex = Math.floor(Math.random() * docs.length)
-        resolve(docs[randomIndex]);
-        //mongoose.connection.close();
-      });
-    });
-  }
-}; 
+};

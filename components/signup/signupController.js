@@ -35,7 +35,7 @@ angular.module('smallTalkzModel.signup', [
 									console.log("response == "+response.data.is_user_exists);
 
 				if (response.data.is_user_exists) {
-					console.log("user already exists....");
+                    $scope.sign_up_info="user with such mail already exists.";
 				}
 				else {
 					register_user(info);
@@ -45,6 +45,7 @@ angular.module('smallTalkzModel.signup', [
 			});
 
 		}
+
 		var register_user = function (info) {
 
 
