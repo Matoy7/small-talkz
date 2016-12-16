@@ -53,38 +53,64 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     }
 
 
+    app.get('/get_random_room',  function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+        dbHandler.get_random_room().then(function (room_name) {
 
+            res.json(room_name);
+        });
+    });
 
     app.get('/online_users', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
-        dbHandler.get_user().then(function (online_users) {
+        dbHandler.get_users().then(function (online_users) {
             res.json(online_users);
         });
     });
 
-    app.get('/rooms', function (req, res) {
-        dbHandler.get_random_room().then(function (online_users) {
-            res.json(online_users);
-        });
-    });
 
-        app.post('/is_mail_already_exists', function (req, res) {
+    app.get('/online_rooms', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
-  
+        dbHandler.get_rooms().then(function (online_rooms) {
+            res.json(online_rooms);
+        });
+    });
+
+    app.post('/is_mail_already_exists', function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+
         dbHandler.is_mail_already_exists(req.body.Mail).then(function (is_mail_already_exists) {
-            
+
             res.json({is_user_exists: is_mail_already_exists});
         });
     });
 
+    app.post('/is_room_already_exists', function (req, res) {
+        console.log("req.body.name - " +req.body.name);
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
 
+        dbHandler.is_mail_already_exists(req.body.name).then(function (is_room_already_exists) {
 
-    app.post('/online_users', function (req, res) {
-        dbHandler.add_online_user(req.body.user_name, req.body.room_name).then(function (online_users) {
-
-            res.json(online_users);
+            res.json({is_room_exists: is_room_already_exists});
         });
     });
+
+
+
+
+    app.post('/add_new_user_session', function (req, res) {
+        dbHandler.add_new_user_session(req.body.user_name, req.body.room_name).then(function (new_user_session) {
+            res.json(new_user_session);
+        });
+    });
+
+    app.post('/register_room', function (req, res) {
+        console.log("req.body.name"+req.body.name);
+        dbHandler.register_room(req.body.name).then(function (new_room) {
+            res.json(new_room);
+        });
+    });
+
 
     app.get('/', function (req, res) {
         res.sendFile(__dirname + '/index.html');
@@ -101,18 +127,18 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
         };
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.authenticate_user(mail, password).then(function (isValid) {
-            if (isValid) {
-                res.status(201).send({
-                    id_token: createToken(new_user_session)
-                });
+                if (isValid) {
+                    res.status(201).send({
+                        id_token: createToken(new_user_session)
+                    });
+                }
+                else {
+                    res.status(401).send({});
+                }
             }
-            else {
-                res.status(401).send({});
-            }
-        }
         );
     });
- 
+
     app.post('/register_user', function (req, res) {
         var new_user = {
             "Mail": req.body.Mail, "Password": req.body.Password

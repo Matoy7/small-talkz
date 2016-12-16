@@ -21,7 +21,7 @@ angular.module('smallTalkzModel.signup', [
 			});
 
 		var is_mail_already_exists = function (info) {
-			console.log("is_mail_already_exists");
+
 			return $http({
 				url: '/is_mail_already_exists',
 				method: 'POST',
@@ -30,9 +30,21 @@ angular.module('smallTalkzModel.signup', [
 
 		}
 
+        var register_user = function (info) {
+            $http({
+                url: '/register_user',
+                method: 'POST',
+                data: info
+            }).then(function (response) {
+                $localStorage.jwt = response.data.id_token;
+                $location.path('main');
+            }, function (error) {
+                alert(error.data);
+            });
+        }
+
 		$scope.register_user_if_not_exists = function (info) {
 			is_mail_already_exists(info).then(function (response) {
-									console.log("response == "+response.data.is_user_exists);
 
 				if (response.data.is_user_exists) {
                     $scope.sign_up_info="user with such mail already exists.";
@@ -46,19 +58,5 @@ angular.module('smallTalkzModel.signup', [
 
 		}
 
-		var register_user = function (info) {
-
-
-			$http({
-				url: '/register_user',
-				method: 'POST',
-				data: info
-			}).then(function (response) {
-				$localStorage.jwt = response.data.id_token;
-				$location.path('main');
-			}, function (error) {
-				alert(error.data);
-			});
-		}
 
 	}]);
