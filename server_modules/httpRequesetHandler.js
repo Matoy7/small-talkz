@@ -86,7 +86,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     });
 
     app.post('/is_room_already_exists', function (req, res) {
-        console.log("req.body.name - " +req.body.name);
+
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
 
         dbHandler.is_mail_already_exists(req.body.name).then(function (is_room_already_exists) {
@@ -105,7 +105,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     });
 
     app.post('/register_room', function (req, res) {
-        console.log("req.body.name"+req.body.name);
+
         dbHandler.register_room(req.body.name).then(function (new_room) {
             res.json(new_room);
         });

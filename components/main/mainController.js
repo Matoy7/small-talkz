@@ -90,7 +90,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                 });
 
             is_room_already_exists({'name': $scope.room}).then(function (response) {
-                console.log("!response.data.is_room_already_exists"+!response.data.is_room_already_exists);
+
                 if (!response.data.is_room_already_exists) {
                     register_room({'name': $scope.room});
                 }
@@ -113,11 +113,11 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         socket.on('login_succeeded', function (data) {
-            console.log('login had ssucceeded');
+            console.log('login succeeded');
         });
 
         socket.on('login_failed', function (data) {
-            console.log('login had failed');
+            console.log('login failed');
         });
 
         $scope.getUserByMail = function (info) {

@@ -42,7 +42,7 @@ module.exports = {
     get_rooms: function () {
         return new Promise(function (resolve, reject) {
              active_rooms.find(function (err, rooms) {
-                console.log("get_rooms:"+rooms);
+
                 resolve(rooms);
             });
         })
