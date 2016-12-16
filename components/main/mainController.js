@@ -91,7 +91,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
             is_room_already_exists({'name': $scope.room}).then(function (response) {
 
-                if (!response.data.is_room_already_exists) {
+                if (!response.data.is_room_exists) {
                     register_room({'name': $scope.room});
                 }
             }, function (error) {

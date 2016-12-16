@@ -72,12 +72,14 @@ module.exports = {
 
 
     is_room_already_exists: function (name) {
+
         return new Promise(function (resolve, reject) {
-            active_rooms.findOne({ Name: name }, function (err, found_room) {
+            active_rooms.findOne({ name: name }, function (err, found_room) {
                 if (err)  {
                     reject(err);
                 }
                 else{
+                    console.log("found_room "+found_room);
                     resolve(found_room!=null);
                 }
             });

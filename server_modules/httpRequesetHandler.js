@@ -31,8 +31,6 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     }
 
 
-
-
     var decodeToken = function (req, res, next) {
         var token = req.get('Authorization').split("Bearer ")[1];
 
@@ -89,7 +87,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
 
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
 
-        dbHandler.is_mail_already_exists(req.body.name).then(function (is_room_already_exists) {
+        dbHandler.is_room_already_exists(req.body.name).then(function (is_room_already_exists) {
 
             res.json({is_room_exists: is_room_already_exists});
         });
