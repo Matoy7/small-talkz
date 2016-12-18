@@ -27,8 +27,8 @@ var active_rooms_schema = mongoose.Schema({
 var active_rooms = mongoose.model('active_rooms', active_rooms_schema);
 
 module.exports = {
-    remove_user: function (user_name) {
-        user_session.find({ 'user_name': user_name }).remove().exec();
+    remove_user_session: function (user_name,room_name) {
+        user_session.find({ 'user_name': user_name, 'room_name':room_name }).remove().exec();
     },
 
     get_users: function () {

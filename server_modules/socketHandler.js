@@ -5,8 +5,10 @@ module.exports.listen = function (http, dbHandler) {
     var io = require('socket.io')(http);
     io.on('connection', function (socket) {
         var socket_user;
+           var socket_room;
         socket.on('room', function (room) {
             socket.room = room;
+            socket_room = room;
             socket.join(room);
         });
 
@@ -28,7 +30,7 @@ module.exports.listen = function (http, dbHandler) {
         });
 
         socket.on('disconnect', function () {
-            dbHandler.remove_user(socket_user);
+            dbHandler.remove_user_session(socket_user,socket_room);
             console.log('Bye' + socket_user);
             io.emit('chat message', "Bye");
 
