@@ -1,7 +1,7 @@
 
 
-smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$location', '$http', 'userDetails', 'jwtHelper', '$localStorage',
-    function ($scope, sessionInfo, $location, $http, userDetails, jwtHelper, $localStorage) {
+smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$location', '$http', 'userDetails', 'jwtHelper', '$localStorage', '$q',
+    function ($scope, sessionInfo, $location, $http, userDetails, jwtHelper, $localStorage, $q) {
 
 
         $http.get('/decodeToken')
@@ -43,16 +43,13 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         $scope.NewConversation = false;
 
 
-
-
-
         $scope.getRandomRoom = function () {
-
 
             $http.get('/get_random_room')
                 .success(function (data) {
 
                     $scope.randomRoom = data.name;
+                console.log("$scope.randomRoom"+$scope.randomRoom);
                 })
                 .error(function (data) {
                     console.log('Error: ' + data);
@@ -76,6 +73,33 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
             });
         }
 
+        var add_user_to_room_request = function (info) {
+            $http({
+                url: '/add_user_to_room',
+                method: 'POST',
+                data: info
+            });
+
+        }
+
+        var create_room_if_not_exists = function (room_name) {
+            var deferred = $q.defer();
+            is_room_already_exists({ 'name': room_name }).then(function (response) {
+                if (!response.data.is_room_exists) {
+                    register_room({ 'name': room_name });
+                    console.log("room: " + room_name + ", was created");
+                    deferred.resolve();
+                }
+            }, function (error) {
+                deferred.reject(error.data);
+            });
+            return deferred.promise;
+        }
+
+        var add_user_to_room = function (user_name, room_name) {
+            add_user_to_room_request({ 'user_name': user_name, 'room_name': room_name });
+        }
+
         $scope.enterRoom = function (info) {
 
             sessionInfo.set(info);
@@ -89,14 +113,10 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                     console.log('Error:' + data);
                 });
 
-            is_room_already_exists({'name': $scope.room}).then(function (response) {
+             var promise = create_room_if_not_exists($scope.room);
+       
+             promise.then(add_user_to_room($scope.name, $scope.room));
 
-                if (!response.data.is_room_exists) {
-                    register_room({'name': $scope.room});
-                }
-            }, function (error) {
-                alert(error.data);
-            });
 
             $location.path("chat");
         }

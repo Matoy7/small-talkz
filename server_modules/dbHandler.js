@@ -22,13 +22,14 @@ var register_user = mongoose.model('register_users', register_user_schema);
 
 // ------- creating active_rooms model -------
 var active_rooms_schema = mongoose.Schema({
-    name: String
+    room_name: String,
+    users: [String]
 });
 var active_rooms = mongoose.model('active_rooms', active_rooms_schema);
 
 module.exports = {
-    remove_user_session: function (user_name,room_name) {
-        user_session.find({ 'user_name': user_name, 'room_name':room_name }).remove().exec();
+    remove_user_session: function (user_name, room_name) {
+        user_session.find({ 'user_name': user_name, 'room_name': room_name }).remove().exec();
     },
 
     get_users: function () {
@@ -39,9 +40,13 @@ module.exports = {
         })
     },
 
+    remove_room: function (room_name) {
+        user_session.find({ 'room_name': room_name }).remove().exec();
+    },
+
     get_rooms: function () {
         return new Promise(function (resolve, reject) {
-             active_rooms.find(function (err, rooms) {
+            active_rooms.find(function (err, rooms) {
 
                 resolve(rooms);
             });
@@ -62,8 +67,8 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             var new_register_user = new register_user(user);
             new_register_user.save(function (err, user) {
-                if (err)  {reject(err);}
-                else{
+                if (err) { reject(err); }
+                else {
                     resolve(user);
                 }
             });
@@ -74,13 +79,13 @@ module.exports = {
     is_room_already_exists: function (name) {
 
         return new Promise(function (resolve, reject) {
-            active_rooms.findOne({ name: name }, function (err, found_room) {
-                if (err)  {
+            active_rooms.findOne({ room_name: name }, function (err, found_room) {
+                if (err) {
                     reject(err);
                 }
-                else{
-                    console.log("found_room "+found_room);
-                    resolve(found_room!=null);
+                else {
+               
+                    resolve(found_room != null);
                 }
             });
         })
@@ -89,10 +94,10 @@ module.exports = {
     register_room: function (room_name) {
 
         return new Promise(function (resolve, reject) {
-            var new_active_room = new active_rooms({name: room_name});
+            var new_active_room = new active_rooms({ room_name: room_name });
             new_active_room.save(function (err, room) {
-                if (err)  {reject(err);}
-                else{
+                if (err) { reject(err); }
+                else {
                     resolve(room);
                 }
             });
@@ -107,11 +112,11 @@ module.exports = {
                     resolve(false);
                     return;
                 }
-                if (user==null){
+                if (user == null) {
                     resolve(false);
                     return;
                 }
-                else{
+                else {
                     resolve(user.Password == password);
                     return;
                 }
@@ -126,12 +131,24 @@ module.exports = {
             var new_online_user = new user_session(new_user_session);
             new_online_user.save(function (err, user) {
 
-                if (err)  {
+                if (err) {
                     reject(err);
                 }
-                else{
+                else {
                     resolve(user);
                 }
+            });
+        })
+    },
+
+    add_user_to_room: function (user_name, room_name) {
+        return new Promise(function (resolve, reject) {
+            active_rooms.findOneAndUpdate({ "room_name": room_name }, { $push: { "users": user_name } }, function (err, doc) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                 console.log(doc);
             });
         })
     },
@@ -151,6 +168,7 @@ module.exports = {
         user_session.find({}).remove().exec();
         active_rooms.find({}).remove().exec();
     },
+
 
     get_random_room: function () {
         var query = active_rooms.find();

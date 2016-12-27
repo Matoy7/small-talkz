@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
 // ---------------- define the server handlers (internal dependencies)
 var dbHandler = require('./server_modules/dbHandler.js');
 var httpRequesetHandler = require('./server_modules/httpRequesetHandler.js').getHttpRequestHandler(dbHandler, app, jwt, expressJwt);
-var io = require('./server_modules/socketHandler.js').listen(http, dbHandler);
+var io = require('./server_modules/socketHandler.js').listen(http, httpRequesetHandler);
 
 // ---------------- start the server
 var listen_port=(process.env.PORT || 3000);

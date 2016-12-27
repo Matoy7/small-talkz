@@ -51,7 +51,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     }
 
 
-    app.get('/get_random_room',  function (req, res) {
+    app.get('/get_random_room', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.get_random_room().then(function (room_name) {
 
@@ -67,6 +67,20 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     });
 
 
+
+
+    app.post('/remove_room', function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+        dbHandler.remove_room(req.body.room_name);
+    });
+
+
+    app.post('/remove_user_session', function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+        dbHandler.remove_user_session(req.body.user_name, req.body.room_name);
+    });
+
+
     app.get('/online_rooms', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.get_rooms().then(function (online_rooms) {
@@ -74,27 +88,18 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
         });
     });
 
-    app.post('/is_mail_already_exists', function (req, res) {
-        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
-
-        dbHandler.is_mail_already_exists(req.body.Mail).then(function (is_mail_already_exists) {
-
-            res.json({is_user_exists: is_mail_already_exists});
-        });
-    });
 
     app.post('/is_room_already_exists', function (req, res) {
-
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
-
         dbHandler.is_room_already_exists(req.body.name).then(function (is_room_already_exists) {
-
-            res.json({is_room_exists: is_room_already_exists});
+            res.json({ is_room_exists: is_room_already_exists });
         });
     });
 
-
-
+    app.post('/add_user_to_room', function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+        dbHandler.add_user_to_room(req.body.user_name, req.body.room_name); 
+    });
 
     app.post('/add_new_user_session', function (req, res) {
         dbHandler.add_new_user_session(req.body.user_name, req.body.room_name).then(function (new_user_session) {
@@ -125,15 +130,15 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
         };
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.authenticate_user(mail, password).then(function (isValid) {
-                if (isValid) {
-                    res.status(201).send({
-                        id_token: createToken(new_user_session)
-                    });
-                }
-                else {
-                    res.status(401).send({});
-                }
+            if (isValid) {
+                res.status(201).send({
+                    id_token: createToken(new_user_session)
+                });
             }
+            else {
+                res.status(401).send({});
+            }
+        }
         );
     });
 
