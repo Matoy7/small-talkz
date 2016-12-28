@@ -49,7 +49,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                 .success(function (data) {
 
                     $scope.randomRoom = data.name;
-                console.log("$scope.randomRoom"+$scope.randomRoom);
+                    console.log("$scope.randomRoom" + $scope.randomRoom);
                 })
                 .error(function (data) {
                     console.log('Error: ' + data);
@@ -113,9 +113,9 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                     console.log('Error:' + data);
                 });
 
-             var promise = create_room_if_not_exists($scope.room);
-       
-             promise.then(add_user_to_room($scope.name, $scope.room));
+            var promise = create_room_if_not_exists($scope.room);
+
+            promise.then(add_user_to_room($scope.name, $scope.room));
 
 
             $location.path("chat");

@@ -27,15 +27,34 @@ var active_rooms_schema = mongoose.Schema({
 });
 var active_rooms = mongoose.model('active_rooms', active_rooms_schema);
 
+// ------- creating online_users model -------
+var online_users_schema = mongoose.Schema({
+    user_mail: String
+});
+var online_users = mongoose.model('online_users', online_users_schema);
+
 module.exports = {
     remove_user_session: function (user_name, room_name) {
         user_session.find({ 'user_name': user_name, 'room_name': room_name }).remove().exec();
     },
 
-    get_users: function () {
+    get_online_users: function () {
         return new Promise(function (resolve, reject) {
-            user_session.find(function (err, users) {
+            online_users.find(function (err, users) {
                 resolve(users);
+            });
+        })
+    },
+
+    add_online_user: function (user) {
+
+        return new Promise(function (resolve, reject) {
+            var new_online_user = new online_users(user);
+            new_online_user.save(function (err, user) {
+                if (err) { reject(err); }
+                else {
+                    resolve(user);
+                }
             });
         })
     },
@@ -84,7 +103,7 @@ module.exports = {
                     reject(err);
                 }
                 else {
-               
+
                     resolve(found_room != null);
                 }
             });
@@ -148,7 +167,7 @@ module.exports = {
                     console.log(err);
                     return;
                 }
-                 console.log(doc);
+                console.log(doc);
             });
         })
     },
@@ -167,6 +186,7 @@ module.exports = {
     remove_all_data: function () {
         user_session.find({}).remove().exec();
         active_rooms.find({}).remove().exec();
+        online_users.find({}).remove().exec();
     },
 
 
