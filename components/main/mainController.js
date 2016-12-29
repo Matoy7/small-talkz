@@ -31,6 +31,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                 console.log('Error: ' + data);
             });
 
+
         $http.get('/online_rooms')
             .success(function (data) {
                 $scope.roomsNumber = data.length;
@@ -48,8 +49,8 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
             $http.get('/get_random_room')
                 .success(function (data) {
 
-                    $scope.randomRoom = data.name;
-                    console.log("$scope.randomRoom" + $scope.randomRoom);
+                    $scope.randomRoom = data.room_name;
+                
                 })
                 .error(function (data) {
                     console.log('Error: ' + data);
@@ -63,6 +64,18 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                 method: 'POST',
                 data: info
             });
+        }
+
+
+
+        var remove_online_user = function (info) {
+
+              $http({
+                url: '/remove_online_user',
+                method: 'POST',
+                data: info
+            });
+            return;
         }
 
         var register_room = function (info) {
@@ -79,8 +92,9 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                 method: 'POST',
                 data: info
             });
-
         }
+
+
 
         var create_room_if_not_exists = function (room_name) {
             var deferred = $q.defer();
@@ -127,9 +141,16 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
             $scope.Mail = info.Mail;
             return $http.post('/authenticate_user', info);
         }
+
+
+
         $scope.logoff = function () {
-            $localStorage.$reset();
-            $location.path('login');
+            $q.when(remove_online_user({ "user_mail": $scope.userMail })).then(function () {
+                $localStorage.$reset();
+                $location.path('login');
+
+            });
+
         }
 
         socket.on('login_succeeded', function (data) {

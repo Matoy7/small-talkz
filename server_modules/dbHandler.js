@@ -63,6 +63,11 @@ module.exports = {
         user_session.find({ 'room_name': room_name }).remove().exec();
     },
 
+    remove_online_user: function (user_mail) {
+        online_users.find({ 'user_mail': user_mail }).remove().exec();
+       console.log("deleted online_user: "+user_mail);
+    },
+
     get_rooms: function () {
         return new Promise(function (resolve, reject) {
             active_rooms.find(function (err, rooms) {

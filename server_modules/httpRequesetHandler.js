@@ -74,6 +74,12 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
         });;
     });
 
+       app.post('/remove_online_user', function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+        console.log("req.body.user_mail ---> " + JSON.stringify(req.body, null, 4));
+        dbHandler.remove_online_user(req.body.user_mail);
+    });
+
 
     app.post('/remove_room', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
@@ -93,9 +99,6 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
             res.json(online_rooms);
         });
     });
-
-   
-
 
     app.post('/is_room_already_exists', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");

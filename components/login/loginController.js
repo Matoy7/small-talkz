@@ -2,9 +2,7 @@
 
 smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo', '$location', '$http', 'userDetails', '$cookies', '$localStorage',
 	function ($scope, sessionInfo, $location, $http, userDetails, $cookies, $localStorage) {
-
-
-
+ 
 		$scope.login_info = "";
 		$scope.userLogin = userDetails.isLogged;
 		$http.get('/online_users')
@@ -29,8 +27,9 @@ smallTalkzModel.controller('loginController', ['$scope', 'sessionInfo', '$locati
 			return $http.post('/getUserByMail', info);
 		}
 
-
+ 
 		$scope.userLogin = function (info) {
+			
 			$http({
 				url: '/authenticate_user',
 				method: 'POST',
