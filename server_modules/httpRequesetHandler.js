@@ -76,7 +76,6 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
 
        app.post('/remove_online_user', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
-        console.log("req.body.user_mail ---> " + JSON.stringify(req.body, null, 4));
         dbHandler.remove_online_user(req.body.user_mail);
     });
 
@@ -107,6 +106,13 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
         });
     });
 
+        app.post('/is_mail_already_exists', function (req, res) {
+        res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
+        dbHandler.is_mail_already_exists(req.body.Mail).then(function (is_mail_already_exists) {
+            res.json({ is_mail_exists: is_mail_already_exists });
+        });
+    });
+ 
     app.post('/add_user_to_room', function (req, res) {
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.add_user_to_room(req.body.user_name, req.body.room_name); 

@@ -58,14 +58,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
         }
 
-        var is_room_already_exists = function (info) {
-            return $http({
-                url: '/is_room_already_exists',
-                method: 'POST',
-                data: info
-            });
-        }
-
 
 
         var remove_online_user = function (info) {
@@ -89,6 +81,14 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         var add_user_to_room_request = function (info) {
             $http({
                 url: '/add_user_to_room',
+                method: 'POST',
+                data: info
+            });
+        }
+
+        var is_room_already_exists = function (info) {
+            return $http({
+                url: '/is_room_already_exists',
                 method: 'POST',
                 data: info
             });

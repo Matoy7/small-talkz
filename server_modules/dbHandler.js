@@ -81,10 +81,13 @@ module.exports = {
     is_mail_already_exists: function (mail) {
         return new Promise(function (resolve, reject) {
             register_user.find({ Mail: mail }, function (err, found_mail) {
+                console.log(mail);
                 resolve(found_mail.length != 0);
             });
         })
     },
+
+    
 
     add_register_user: function (user) {
 
