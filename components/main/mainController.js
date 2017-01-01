@@ -50,7 +50,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
                 .success(function (data) {
 
                     $scope.randomRoom = data.room_name;
-                
+
                 })
                 .error(function (data) {
                     console.log('Error: ' + data);
@@ -62,7 +62,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
         var remove_online_user = function (info) {
 
-              $http({
+            $http({
                 url: '/remove_online_user',
                 method: 'POST',
                 data: info
@@ -71,7 +71,9 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         var register_room = function (info) {
-            $http({
+                                    
+
+            return $http({
                 url: '/register_room',
                 method: 'POST',
                 data: info
@@ -79,7 +81,9 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         var add_user_to_room_request = function (info) {
-            $http({
+                                               
+
+            return $http({
                 url: '/add_user_to_room',
                 method: 'POST',
                 data: info
@@ -87,6 +91,8 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         var is_room_already_exists = function (info) {
+                                                        
+
             return $http({
                 url: '/is_room_already_exists',
                 method: 'POST',
@@ -97,44 +103,42 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
 
         var create_room_if_not_exists = function (room_name) {
-            var deferred = $q.defer();
-            is_room_already_exists({ 'name': room_name }).then(function (response) {
+                   
+
+            return is_room_already_exists({
+                'name': room_name
+            }).then(function (response) {
                 if (!response.data.is_room_exists) {
-                    register_room({ 'name': room_name });
-                    console.log("room: " + room_name + ", was created");
-                    deferred.resolve();
-                }
+                    return register_room({
+                        'name': room_name
+                    });
+                } else {
+                    return room_name;
+                };
             }, function (error) {
-                deferred.reject(error.data);
+                throw error;
             });
-            return deferred.promise;
+
         }
 
         var add_user_to_room = function (user_name, room_name) {
-            add_user_to_room_request({ 'user_name': user_name, 'room_name': room_name });
+            return add_user_to_room_request({
+                'user_name': user_name,
+                'room_name': room_name
+            });
         }
 
         $scope.enterRoom = function (info) {
+              create_room_if_not_exists($scope.room).then(function () {
+                  add_user_to_room($scope.userMail, $scope.roomName);
+                            console.log("room===>"+$scope.roomName);
 
-            sessionInfo.set(info);
-            $scope.name = sessionInfo.get().name;
-            $scope.room = sessionInfo.get().room;
-
-            $http.post('/add_new_user_session', { 'user_name': $scope.name, 'room_name': $scope.room })
-                .success(function (data) {
-                })
-                .error(function (data) {
-                    console.log('Error:' + data);
-                });
-
-            var promise = create_room_if_not_exists($scope.room);
-
-            promise.then(add_user_to_room($scope.name, $scope.room));
-
-
-            $location.path("chat");
+            }).then(function () {
+                $location.path("chat")
+            })
         }
 
+ 
         var socket = io();
 
         $scope.userLogin = function (info) {
@@ -153,13 +157,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
         }
 
-        socket.on('login_succeeded', function (data) {
-            console.log('login succeeded');
-        });
-
-        socket.on('login_failed', function (data) {
-            console.log('login failed');
-        });
 
         $scope.getUserByMail = function (info) {
             return $http.post('/getUserByMail', info);

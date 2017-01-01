@@ -65,7 +65,7 @@ module.exports = {
 
     remove_online_user: function (user_mail) {
         online_users.find({ 'user_mail': user_mail }).remove().exec();
-       console.log("deleted online_user: "+user_mail);
+    
     },
 
     get_rooms: function () {
@@ -81,8 +81,19 @@ module.exports = {
     is_mail_already_exists: function (mail) {
         return new Promise(function (resolve, reject) {
             register_user.find({ Mail: mail }, function (err, found_mail) {
-                console.log(mail);
+         
                 resolve(found_mail.length != 0);
+            });
+        })
+    },
+
+
+    get_users_in_room: function (room_name) {
+             
+        return new Promise(function (resolve, reject) {
+            active_rooms_schema.findOne({ 'room_name': room_name }, 'users', function (err, room_details) {
+ 
+                resolve(room_details.users);
             });
         })
     },
@@ -111,6 +122,7 @@ module.exports = {
                     reject(err);
                 }
                 else {
+ 
 
                     resolve(found_room != null);
                 }
@@ -119,12 +131,13 @@ module.exports = {
     },
 
     register_room: function (room_name) {
-
+ 
         return new Promise(function (resolve, reject) {
             var new_active_room = new active_rooms({ room_name: room_name });
             new_active_room.save(function (err, room) {
                 if (err) { reject(err); }
                 else {
+                  
                     resolve(room);
                 }
             });
@@ -169,13 +182,14 @@ module.exports = {
     },
 
     add_user_to_room: function (user_name, room_name) {
+    
         return new Promise(function (resolve, reject) {
-            active_rooms.findOneAndUpdate({ "room_name": room_name }, { $push: { "users": user_name } }, function (err, doc) {
+            active_rooms.findOneAndUpdate({ room_name: room_name }, { $push: { users: user_name } }, function (err, doc) {
                 if (err) {
                     console.log(err);
                     return;
                 }
-                console.log(doc);
+                
             });
         })
     },

@@ -13,7 +13,7 @@ module.exports.listen = function (http, dbHandler) {
         });
 
         socket.on('user', function (user) {
-            console.log('Hello ' + user);
+            // console.log('Hello ' + user);
             socket_user = user;
         });
 
@@ -31,7 +31,7 @@ module.exports.listen = function (http, dbHandler) {
 
         socket.on('disconnect', function () {
             dbHandler.remove_user_session(socket_user, socket_room);
-            console.log('Bye' + socket_user);
+            // console.log('Bye' + socket_user);
             io.emit('chat message', "Bye");
         });
 
