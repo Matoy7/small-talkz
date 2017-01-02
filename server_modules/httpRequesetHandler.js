@@ -100,9 +100,10 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     });
 
     app.post('/get_users_in_room', function (req, res) {
-        
+     
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.get_users_in_room(req.body.room_name).then(function (users_list) {
+              
             res.json({ "users_list": users_list });
         });
     });
@@ -124,7 +125,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     });
 
         app.post('/add_user_to_room', function (req, res) {
-      console.log("req.body.Mail ================> "+req.body.user_name);
+ 
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.add_user_to_room(req.body.user_name, req.body.room_name); 
     });

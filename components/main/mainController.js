@@ -2,8 +2,6 @@
 
 smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$location', '$http', 'userDetails', 'jwtHelper', '$localStorage', '$q',
     function ($scope, sessionInfo, $location, $http, userDetails, jwtHelper, $localStorage, $q) {
-
-
         $http.get('/decodeToken')
             .success(function (data) {
                 loadUserDetails(data);
@@ -25,7 +23,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         $http.get('/online_users')
             .success(function (data) {
                 $scope.usersNumber = data.length;
-
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -35,7 +32,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         $http.get('/online_rooms')
             .success(function (data) {
                 $scope.roomsNumber = data.length;
-
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -45,12 +41,9 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
 
         $scope.getRandomRoom = function () {
-
             $http.get('/get_random_room')
                 .success(function (data) {
-
                     $scope.randomRoom = data.room_name;
-
                 })
                 .error(function (data) {
                     console.log('Error: ' + data);
@@ -58,10 +51,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
 
         }
 
-
-
         var remove_online_user = function (info) {
-
             $http({
                 url: '/remove_online_user',
                 method: 'POST',
@@ -71,8 +61,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         var register_room = function (info) {
-                                    
-
             return $http({
                 url: '/register_room',
                 method: 'POST',
@@ -81,8 +69,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         var add_user_to_room_request = function (info) {
-                                               
-
             return $http({
                 url: '/add_user_to_room',
                 method: 'POST',
@@ -91,8 +77,6 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         var is_room_already_exists = function (info) {
-                                                        
-
             return $http({
                 url: '/is_room_already_exists',
                 method: 'POST',
@@ -100,11 +84,7 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
             });
         }
 
-
-
         var create_room_if_not_exists = function (room_name) {
-                   
-
             return is_room_already_exists({
                 'name': room_name
             }).then(function (response) {
@@ -129,16 +109,17 @@ smallTalkzModel.controller('mainController', ['$scope', 'sessionInfo', '$locatio
         }
 
         $scope.enterRoom = function (info) {
-              create_room_if_not_exists($scope.room).then(function () {
-                  add_user_to_room($scope.userMail, $scope.roomName);
-                            console.log("room===>"+$scope.roomName);
-
+             
+            create_room_if_not_exists(info.room).then(function () {
+                add_user_to_room(info.name, info.room);
             }).then(function () {
+                $scope.room = sessionInfo.set({ "room": info.room, "userMail": info.name });
+
                 $location.path("chat")
             })
         }
 
- 
+
         var socket = io();
 
         $scope.userLogin = function (info) {

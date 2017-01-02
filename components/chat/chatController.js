@@ -6,7 +6,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo', '$q', '$t
     $scope.users_list = [];
     $scope.message_type = "sender";
     $scope.room = sessionInfo.get().room;
-    $scope.name = sessionInfo.get().name;
+    $scope.userMail = sessionInfo.get().userMail;
 
     socket.emit('room', $scope.room);
     socket.emit('user', $scope.name);
@@ -14,28 +14,31 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo', '$q', '$t
     var room_info;
     $scope.users_list = [];
 
+   
 
     var updateUsersList = function (room_name) {
+          
+ 
       $http({
         url: '/get_users_in_room',
         method: 'POST',
         data: { "room_name": room_name}
       }).then(function (response) {
-        data.forEach(updateUsers);
+        response.data.users_list.forEach(updateUsers);
       }, function (error) {
         console.log(error);
       });
     };
 
     function updateUsers(element, index, array) {
-      $scope.users_list.push(element.user_name);
+      $scope.users_list.push(element);
     }
 
     updateUsersList($scope.room);
 
-    socket.emit('chat_message', { room: $scope.room, msg: $scope.name + ' has joined the coversation' });
+    socket.emit('chat_message', { room: $scope.room, msg: $scope.userMail + ' has joined the coversation' });
 
-    socket.emit('new_user', { room: $scope.room, name: $scope.name });
+    socket.emit('new_user', { room: $scope.room, name: $scope.userMail });
 
     $scope.submit = function () {
       socket.emit('chat_message', { room: $scope.room, msg: $scope.insertedText });
