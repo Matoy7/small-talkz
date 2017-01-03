@@ -32,15 +32,26 @@ module.exports.listen = function (http, dbHandler) {
         });
 
         socket.on('disconnect', function () {
-            if (socket_user && socket_room){
-            console.log("disconnect");
-            dbHandler.remove_user_session(socket_user, socket_room);
-            dbHandler.remove_user_from_room(socket_user, socket_room);
-            socket.broadcast.to(socket_room).emit('update_users', socket_room);
-            io.emit('chat message', "Bye");
+            if (socket_user && socket_room) {
+                console.log("disconnect");
+                dbHandler.remove_user_session(socket_user, socket_room).then(function () {
+                    dbHandler.remove_user_from_room(socket_user, socket_room).then(function () {
+                        socket.broadcast.to(socket_room).emit('update_users', socket_room);
+                        dbHandler.get_users_in_room(socket_room).then(function (users_list) {
+                            if (users_list.length == 0) {
+                                                            console.log("empty " );
+
+                                dbHandler.remove_room(socket_room).then(function () {
+
+                                })
+
+                            }
+                        });
+                        io.emit('chat message', "Bye");
+                    });
+                });
             }
         });
-
     });
 
     return io;

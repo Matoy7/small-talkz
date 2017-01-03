@@ -35,13 +35,36 @@ var online_users = mongoose.model('online_users', online_users_schema);
 
 module.exports = {
     remove_user_session: function (user_name, room_name) {
-        user_session.find({ 'user_name': user_name, 'room_name': room_name }).remove().exec();
+        return new Promise(function (resolve, reject) {
+            user_session.find({ 'user_name': user_name, 'room_name': room_name }).remove().exec();
+            resolve();
+        });
     },
 
     remove_user_from_room: function (user_name, room_name) {
-        console.log("remove_user_from_room: " + room_name + ", user: " + user_name);
-        active_rooms.update( {'room_name': room_name }, { $pullAll: {'users': [user_name] } } )
+        return new Promise(function (resolve, reject) {
+            active_rooms.findOneAndUpdate({ room_name: room_name }, { $pull: { users: user_name } }, function (err, doc) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                resolve();
+            });
+        })
     },
+
+    get_users_in_room: function (room_name) {
+        return new Promise(function (resolve, reject) {
+            active_rooms.find({ room_name: room_name }, 'users', function (err, room) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                resolve(room.users);
+            });
+        })
+    },
+
 
     get_online_users: function () {
         return new Promise(function (resolve, reject) {
@@ -65,12 +88,18 @@ module.exports = {
     },
 
     remove_room: function (room_name) {
-        user_session.find({ 'room_name': room_name }).remove().exec();
+        return new Promise(function (resolve, reject) {
+            console.log("removeddd"+ room_name);
+            active_rooms.find({ 'room_name': room_name }).remove().exec();
+            resolve();
+        });
     },
 
     remove_online_user: function (user_mail) {
-        online_users.find({ 'user_mail': user_mail }).remove().exec();
-
+        return new Promise(function (resolve, reject) {
+            online_users.find({ 'user_mail': user_mail }).remove().exec();
+            resolve()
+        });
     },
 
     get_rooms: function () {
