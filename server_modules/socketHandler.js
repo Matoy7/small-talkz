@@ -22,7 +22,8 @@ module.exports.listen = function (http, dbHandler) {
         });
 
         socket.on('new_user', function (data) {
-            socket.broadcast.to(data.room).emit('handle_new_user', data);
+
+            socket.broadcast.to(data.room).emit('new_user', data.room);
         });
 
         socket.on('info_message', function (data) {

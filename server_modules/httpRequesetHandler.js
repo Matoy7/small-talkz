@@ -100,7 +100,7 @@ module.exports.getHttpRequestHandler = function (dbHandler, app, jwt, expressJwt
     });
 
     app.post('/get_users_in_room', function (req, res) {
-     
+
         res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate, max-age=0");
         dbHandler.get_users_in_room(req.body.room_name).then(function (users_list) {
               

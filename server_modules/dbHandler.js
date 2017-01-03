@@ -1,8 +1,8 @@
 
 var mongoose = require('mongoose');
 
-//var url = 'mongodb://localhost:27017/small-talkz';
-var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
+var url = 'mongodb://localhost:27017/small-talkz';
+//var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
 mongoose.connect(url);
 
 
@@ -89,15 +89,12 @@ module.exports = {
 
 
     get_users_in_room: function (room_name) {
- 
         return new Promise(function (resolve, reject) {
             active_rooms.findOne({ 'room_name': room_name }, function (err, room_details) {
                 if (err) {
                     reject(err);
                 }
                 else {
-                    console.log(room_name);
-                    console.log(room_details);
                     resolve(room_details.users);
                 }
             });
@@ -128,8 +125,6 @@ module.exports = {
                     reject(err);
                 }
                 else {
-
-
                     resolve(found_room != null);
                 }
             });
