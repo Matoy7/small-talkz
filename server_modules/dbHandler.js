@@ -38,6 +38,11 @@ module.exports = {
         user_session.find({ 'user_name': user_name, 'room_name': room_name }).remove().exec();
     },
 
+    remove_user_from_room: function (user_name, room_name) {
+        console.log("remove_user_from_room: " + room_name + ", user: " + user_name);
+        active_rooms.update( {'room_name': room_name }, { $pullAll: {'users': [user_name] } } )
+    },
+
     get_online_users: function () {
         return new Promise(function (resolve, reject) {
             online_users.find(function (err, users) {

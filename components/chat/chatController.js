@@ -9,7 +9,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo', '$q', '$t
         $scope.userMail = sessionInfo.get().userMail;
 
         socket.emit('room', $scope.room);
-        socket.emit('user', $scope.name);
+        socket.emit('user', $scope.userMail);
 
         var room_info;
         $scope.users_list = [];
@@ -36,7 +36,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo', '$q', '$t
 
         updateUsersList($scope.room);
 
-        socket.emit('chat_message', { room: $scope.room, msg: $scope.userMail + ' has joined the coversation' });
+        socket.emit('chat_message', { room: $scope.room, msg: $scope.userMail + ' has joined the room' });
 
         socket.emit('new_user', { room: $scope.room, name: $scope.userMail });
 
@@ -52,7 +52,7 @@ smallTalkzModel.controller("chatController", ['$scope', 'sessionInfo', '$q', '$t
             return false;
         }
 
-        socket.on('new_user', function (room) {
+        socket.on('update_users', function (room) {
             $scope.$apply(function () {updateUsersList(room)})
         });
 
