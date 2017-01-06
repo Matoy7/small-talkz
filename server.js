@@ -19,20 +19,13 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
-app.use('/',express.static(__dirname));
-
-app.use('/scripts', express.static(path.join(__dirname,
-	'node_modules')));
-
-app.get('/', function (req, res) {
-	res.sendFile(express.static(path.join(__dirname + '/index.html')));
-});
-
+app.use('/',express.static(path.join(__dirname, '/public')));
+  
 
 // ---------------- define the server handlers (internal dependencies)
-var dbHandler = require('./server_modules/dbHandler.js');
-var httpRequesetHandler = require('./server_modules/httpRequesetHandler.js').getHttpRequestHandler(dbHandler, app, jwt, expressJwt);
-var io = require('./server_modules/socketHandler.js').listen(http, dbHandler);
+var dbHandler = require('./server_handlers/dbHandler.js');
+var httpRequesetHandler = require('./server_handlers/httpHandler.js').getHttpHandler(dbHandler, app, jwt, expressJwt);
+var io = require('./server_handlers/socketHandler.js').listen(http, dbHandler);
 
 // ---------------- start the server
 var listen_port=(process.env.PORT || 3000);
