@@ -7,12 +7,21 @@ angular.module('smallTalkzModel.login', [
 	'ngCookies',
 	'ngStorage',
 	'angular-jwt'
-]).controller('loginController', ['$scope', 'sessionInfo', '$location', '$http', 'userDetails', '$cookies', '$localStorage',
-	function ($scope, sessionInfo, $location, $http, userDetails, $cookies, $localStorage) {
- 
+]).controller('loginController', ['$scope', '$location', '$http', '$cookies', '$localStorage', 'httpService', 'userDetails', 'sessionInfo',
+	function ($scope, $location, $http, $cookies, $localStorage, httpService, userDetails, sessionInfo) {
 		$scope.login_info = "";
 		$scope.userLogin = userDetails.isLogged;
-		$http.get('/online_users')
+		$scope.getUserByMail = httpService.get_user_by_mail;
+		$scope.userLogin = function (user_credentials) {
+			return httpService.get_user_login(user_credentials).then(function (response) {
+				httpService.add_online_user({ "user_mail": user_credentials.Mail });
+				$localStorage.jwt = response.data.id_token;
+				$location.path('main');
+			}, function (error) {
+				$scope.login_info = "worng name or password";
+			});
+		}
+		httpService.get_online_users()
 			.success(function (data) {
 				$scope.usersNumber = data.length;
 
@@ -20,8 +29,8 @@ angular.module('smallTalkzModel.login', [
 			.error(function (data) {
 				console.log('Error: ' + data);
 			});
-
-		$http.get('/online_rooms')
+		;
+		httpService.get_online_rooms()
 			.success(function (data) {
 				$scope.roomsNumber = data.length;
 
@@ -29,42 +38,5 @@ angular.module('smallTalkzModel.login', [
 			.error(function (data) {
 				console.log('Error: ' + data);
 			});
-
-		$scope.getUserByMail = function (info) {
-			return $http.post('/getUserByMail', info);
-		}
-
- 
-		$scope.userLogin = function (info) {
-			
-			$http({
-				url: '/authenticate_user',
-				method: 'POST',
-				data: info
-			}).then(function (response) {
-				add_online_user({ "user_mail": info.Mail });
-				$localStorage.jwt = response.data.id_token;
-				$location.path('main');
-			}, function (error) {
-				$scope.login_info = "worng name or password";
-			});
-		}
-
-		var add_online_user = function (info) {
-			$http({
-				url: '/add_online_user',
-				method: 'POST',
-				data: info
-			}).then(function (response) {
-
-			}, function (error) {
-
-			});
-		}
-
-
-		$scope.getMsg = function () {
-			$scope.message = sessionInfo.get();
-		}
 
 	}]);

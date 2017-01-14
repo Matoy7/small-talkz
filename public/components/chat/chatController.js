@@ -24,19 +24,7 @@ angular.module('smallTalkzModel.chat', [
 
 
 
-        var updateUsersList = function (room_name) {
 
-            $http({
-                url: '/get_users_in_room',
-                method: 'POST',
-                data: { "room_name": room_name}
-            }).then(function (response) {
-                $scope.users_list=[];
-                response.data.users_list.forEach(updateUsers);
-            }, function (error) {
-                console.log(error);
-            });
-        };
 
         function updateUsers(element, index, array) {
             $scope.users_list.push(element);
