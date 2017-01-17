@@ -1,8 +1,8 @@
 
 var mongoose = require('mongoose');
 
-//var url = 'mongodb://localhost:27017/small-talkz';
-var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
+var url = 'mongodb://localhost:27017/small-talkz';
+//var url = 'mongodb://Yotam:Yotam@ds023475.mlab.com:23475/small-talkz';
 mongoose.connect(url);
 
 
@@ -129,7 +129,12 @@ module.exports = {
                     reject(err);
                 }
                 else {
-                    resolve(room_details.users);
+                    if (!room_details){
+                        resolve ([]);
+                    }
+                    else{
+                        resolve(room_details.users);
+                    }
                 }
             });
         })

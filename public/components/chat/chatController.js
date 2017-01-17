@@ -1,14 +1,14 @@
 
 
 angular.module('smallTalkzModel.chat', [
-	'ngStorage',
-	'ui.router',
-	'luegg.directives',
-	'ngCookies',
-	'ngStorage',
-	'angular-jwt'
-]).controller("chatController", ['$scope', 'sessionInfo', '$q', '$timeout', '$http',
-    function ($scope, sessionInfo, $q, $timeout, $http) {
+    'ngStorage',
+    'ui.router',
+    'luegg.directives',
+    'ngCookies',
+    'ngStorage',
+    'angular-jwt'
+]).controller("chatController", ['$scope', 'sessionInfo','httpService', '$q', '$timeout', '$http',
+    function ($scope, sessionInfo, httpService, $q, $timeout, $http) {
         var socket = io();
         $scope.messages = [];
         $scope.users_list = [];
@@ -23,14 +23,17 @@ angular.module('smallTalkzModel.chat', [
         $scope.users_list = [];
 
 
-
-
-
         function updateUsers(element, index, array) {
             $scope.users_list.push(element);
         }
 
-        updateUsersList($scope.room);
+        httpService.update_users_list($scope.room)
+            .then(function (response) {
+                $scope.users_list = [];
+                response.data.users_list.forEach(updateUsers);
+            }, function (error) {
+                console.log(error);
+            })
 
         socket.emit('chat_message', { room: $scope.room, msg: $scope.userMail + ' has joined the room' });
 
@@ -49,7 +52,7 @@ angular.module('smallTalkzModel.chat', [
         }
 
         socket.on('update_users', function (room) {
-            $scope.$apply(function () {updateUsersList(room)})
+            $scope.$apply(function () {httpService.update_users_list(room)})
         });
 
         socket.on('chat_message', function (msg) {

@@ -8,12 +8,7 @@ smallTalkzModel.factory('httpService', ['$http', function ($http) {
                 method: 'POST',
                 data: { "room_name": room_name }
             })
-            // .then(function (response) {
-            //     $scope.users_list = [];
-            //     response.data.users_list.forEach(updateUsers);
-            // }, function (error) {
-            //     console.log(error);
-            // });
+
         },
 
         get_user_by_mail: function (info) {
@@ -26,7 +21,6 @@ smallTalkzModel.factory('httpService', ['$http', function ($http) {
                 url: '/online_users',
                 method: 'GET'
             })
-    
         },
 
         get_online_rooms: function () {
@@ -34,7 +28,6 @@ smallTalkzModel.factory('httpService', ['$http', function ($http) {
                 url: '/online_rooms',
                 method: 'GET'
             })
-         
         },
 
         get_user_login: function (info) {
@@ -43,7 +36,6 @@ smallTalkzModel.factory('httpService', ['$http', function ($http) {
                 method: 'POST',
                 data: info
             })
-
         },
 
         add_online_user: function (info) {
@@ -65,14 +57,10 @@ smallTalkzModel.factory('httpService', ['$http', function ($http) {
         },
 
         get_random_room: function () {
-            $http.get('/get_random_room')
-                .success(function (data) {
-                    $scope.randomRoom = data.room_name;
-                })
-                .error(function (data) {
-                    console.log('Error: ' + data);
-                });
-
+            return $http({
+                url: '/get_random_room',
+                method: 'GET',
+            })
         },
 
         remove_online_user: function (info) {

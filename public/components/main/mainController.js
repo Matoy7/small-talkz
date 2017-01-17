@@ -8,15 +8,15 @@ angular.module('smallTalkzModel.main', [
     'angular-jwt'
 ]).controller('mainController', ['$scope', 'sessionInfo', '$location', '$http', 'httpService', 'userDetails', 'jwtHelper', '$localStorage', '$q',
     function ($scope, sessionInfo, $location, $http, httpService, userDetails, jwtHelper, $localStorage, $q) {
-      
-      
-      var loadUserDetails = function (data) {
+
+
+        var loadUserDetails = function (data) {
             $scope.userMail = data.Mail;
         }
 
         httpService.decode_token(loadUserDetails);
-  
-  
+
+
         $scope.login_info = "";
         $scope.userLogin = userDetails.isLogged;
 
@@ -42,7 +42,16 @@ angular.module('smallTalkzModel.main', [
             });
 
         $scope.NewConversation = false;
-        $scope.getRandomRoom =  httpService.getRandomRoom;
+        $scope.getRandomRoom =  function() {
+            httpService.get_random_room()
+                .success(function (data) {
+                    $scope.randomRoom = data.room_name;
+                })
+                .error(function (data) {
+                    console.log('Error: ' + data);
+                });
+        }
+
 
         var create_room_if_not_exists = function (room_name) {
             return httpService.is_room_already_exists({
