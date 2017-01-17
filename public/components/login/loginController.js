@@ -16,7 +16,7 @@ angular.module('smallTalkzModel.login', [
         $scope.userLogin = function (user_credentials) {
             var response;
             httpService.get_user_login(user_credentials)
-                .then(function (_response) {
+                .then(function (response) {
                     response=_response;
                     httpService.add_online_user({ "user_mail": user_credentials.Mail })
                 }, function (error) {
